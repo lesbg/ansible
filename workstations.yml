@@ -1,0 +1,6 @@
+---
+# file: workstations.yml
+ - hosts: workstations
+   roles:
+    - common
+    - workstations

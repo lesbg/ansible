@@ -1,0 +1,6 @@
+[rpmfusion-nonfree]
+name=RPM Fusion for Fedora $releasever - Nonfree
+mirrorlist=http://mirrors.rpmfusion.org/mirrorlist?repo=nonfree-fedora-$releasever&arch=$basearch
+enabled=1
+skip_if_broken=1
+metadata_expire=7d

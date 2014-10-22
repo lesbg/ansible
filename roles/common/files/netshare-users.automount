@@ -1,0 +1,9 @@
+[Unit]
+Description=Users
+ConditionPathExists=/netshare/users
+
+[Automount]
+Where=/netshare/users
+
+[Install]
+WantedBy=multi-user.target

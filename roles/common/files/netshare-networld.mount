@@ -1,0 +1,14 @@
+[Unit]
+Description=Networld
+Requires=NetworkManager-wait-online.service NetworkManager.service rpcbind.service
+Wants=bindfs-depts.service
+After=NetworkManager-wait-online.service NetworkManager.service rpcbind.service
+Before=bindfs-depts.service
+
+[Mount]
+What=usershare:/netshare/networld
+Where=/netshare/networld
+Type=nfs
+Options=defaults,async,acl,nolock,nfsvers=3
+StandardOutput=syslog
+StandardError=syslog

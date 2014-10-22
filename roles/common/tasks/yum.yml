@@ -1,0 +1,26 @@
+---
+# file: roles/common/tasks/yum.yml
+
+# We use a local mirror that intercepts http requests, but not https requests, so disable https 
+- name: turn off https links in fedora yum repo
+  lineinfile: dest=/etc/yum.repos.d/fedora.repo
+              backrefs=yes
+              regexp="metalink(.*)https(.*)metalink(.*)(fedora-\$release)(.*)"
+              line="mirrorlist\1http\2mirrorlist\3\4\5"
+              state=present
+  notify:
+   - clear yum cache
+   - create empty yum cache
+  when: ansible_distribution == "Fedora"
+
+- name: turn off https links in fedora-updates yum repo
+  lineinfile: dest=/etc/yum.repos.d/fedora-updates.repo
+              backrefs=yes
+              regexp="metalink(.*)https(.*)metalink(.*)(updates-released-f\$release)(.*)"
+              line="mirrorlist\1http\2mirrorlist\3\4\5"
+              state=present
+  notify:
+   - clear yum cache
+   - create empty yum cache
+  when: ansible_distribution == "Fedora"
+

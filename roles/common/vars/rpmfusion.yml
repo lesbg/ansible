@@ -1,0 +1,3 @@
+rpmfusion_files:
+ - rpmfusion-free.repo
+ - rpmfusion-nonfree.repo

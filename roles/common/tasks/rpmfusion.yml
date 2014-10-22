@@ -1,0 +1,37 @@
+---
+# file: roles/common/tasks/rpmfusion.yml
+
+- name: check whether rpmfusion repos are installed
+  file: path=/etc/yum.repos.d/{{item}}.repo state=file
+  register: rpmfusion_result
+  ignore_errors: True
+  with_items:
+   - rpmfusion-free
+   - rpmfusion-nonfree 
+
+- name: add skeleton rpmfusion repos to /etc/yum.repos.d
+  copy: src={{item}}.repo dest=/etc/yum.repos.d/{{item}}-temp.repo mode=0644
+  with_items:
+   - rpmfusion-free
+   - rpmfusion-nonfree
+  when: rpmfusion_result|failed
+
+- name: install rpmfusion-free-release
+  yum: name=rpmfusion-free-release
+       disable_gpg_check=yes
+       state=present
+  when: rpmfusion_result|failed
+
+- name: install rpmfusion-nonfree-release
+  yum: name=rpmfusion-nonfree-release
+       disable_gpg_check=yes
+       state=present
+  when: rpmfusion_result|failed
+
+- name: remove skeleton rpmfusion repos from /etc/yum.repos.d
+  file: path=/etc/yum.repos.d/{{item}}-temp.repo
+        state=absent
+  with_items:
+   - rpmfusion-free
+   - rpmfusion-nonfree
+  when: rpmfusion_result|failed

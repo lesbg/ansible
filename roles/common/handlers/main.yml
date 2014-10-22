@@ -1,0 +1,9 @@
+---
+# file: roles/common/handlers/main.yml
+
+- name: reload systemd config
+  command: systemctl --system daemon-reload
+
+- include: ntp.yml
+- include: yum.yml
+- include: nfs.yml

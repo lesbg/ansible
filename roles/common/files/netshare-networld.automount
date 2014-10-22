@@ -1,0 +1,9 @@
+[Unit]
+Description=Networld
+ConditionPathExists=/netshare/networld
+
+[Automount]
+Where=/netshare/networld
+
+[Install]
+WantedBy=multi-user.target

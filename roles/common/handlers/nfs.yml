@@ -1,0 +1,8 @@
+---
+# file: roles/common/handlers/nfs.yml
+- name: start NFS units
+  service: name={{item}} enabled=yes state=restarted
+  with_items:
+   - netshare-networld.automount
+   - netshare-users.automount
+   - bindfs-depts.service

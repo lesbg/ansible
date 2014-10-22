@@ -1,0 +1,9 @@
+---
+# file: roles/common/handlers/yum.yml
+- name: clear yum cache
+  file: path=/var/cache/yum
+        state=absent
+
+- name: create empty yum cache
+  file: path=/var/cache/yum
+        state=directory mode=0755 owner=root group=root

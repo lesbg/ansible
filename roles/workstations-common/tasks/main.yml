@@ -1,0 +1,6 @@
+---
+# file: roles/workstations/tasks/main.yml
+
+- include: ../../common/tasks/rpmfusion.yml
+- include: ../../common/tasks/nfs.yml
+- include: packages.yml

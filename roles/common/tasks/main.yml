@@ -1,0 +1,6 @@
+---
+# file: roles/common/tasks/main.yml
+
+- include: ntp.yml
+- include: profile.yml
+- include: yum.yml
