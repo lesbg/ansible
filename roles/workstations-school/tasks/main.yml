@@ -1,0 +1,5 @@
+---
+# file: roles/workstations-school/tasks/main.yml
+- include: ../../workstations-common/tasks/main.yml
+
+- include: ../../common/tasks/nfs.yml

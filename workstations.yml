@@ -2,5 +2,4 @@
 # file: workstations.yml
  - hosts: workstations
    roles:
-    - common
-    - workstations
+    - workstations-school-net
