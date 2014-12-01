@@ -1,0 +1,36 @@
+---
+# file: roles/workstations-school/tasks/ssh.yml
+
+- name: install ssh server
+  yum: name=openssh-server
+  tags:
+   - install
+   - ssh
+
+- name: be sure sshd service is running and enabled
+  service: name=sshd state=running enabled=yes
+  tags:
+   - install
+   - ssh
+
+- name: install public ssh keys for school workstations
+  copy: src=ssh-keys/{{item}} dest=/etc/ssh/ mode=0644
+  notify:
+   - restart ssh server
+  with_items:
+   - ssh_host_rsa_key.pub
+   - ssh_host_ecdsa_key.pub
+  tags:
+   - install
+   - ssh
+
+- name: install private ssh keys for school workstations
+  copy: src=ssh-keys/{{item}} dest=/etc/ssh/ mode=0640 group=ssh_keys
+  notify:
+   - restart ssh server
+  with_items:
+   - ssh_host_rsa_key
+   - ssh_host_ecdsa_key
+  tags:
+   - install
+   - ssh

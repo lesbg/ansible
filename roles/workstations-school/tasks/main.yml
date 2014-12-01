@@ -6,6 +6,7 @@
 
 - include: ../../common/tasks/disable-firewalld.yml
 
+- include: ssh.yml
 - include: logos.yml
 - include: multiseat.yml
 - include: display-manager.yml
