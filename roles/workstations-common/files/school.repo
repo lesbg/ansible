@@ -1,0 +1,5 @@
+[school]
+name=Rebuilt Packages for school - Fedora $releasever - $basearch
+baseurl=http://www/rpms/school/$releasever/$basearch/
+enabled=1
+gpgcheck=0

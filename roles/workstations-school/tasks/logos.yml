@@ -1,0 +1,8 @@
+---
+# file: roles/workstations-school/tasks/logos.yml
+
+- name: copy school logos across
+  copy: src=logos/ dest=/usr/share/pixmaps/
+  tags:
+   - install
+   - logos

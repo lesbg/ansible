@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+  <kcfgfile name=""/>
+
+  <group name="greeter-settings">
+    <entry name="Background" type="String">
+      <default></default>
+    </entry>
+    <entry name="BackgroundKeepAspectRatio" type="Bool">
+      <default>true</default>
+    </entry>
+    <entry name="Logo" type="String">
+        <default></default>
+    </entry>
+    <entry name="GreetMessage" type="String">
+        <default>Welcome to %hostname%</default>
+    </entry>
+  </group>
+</kcfg>

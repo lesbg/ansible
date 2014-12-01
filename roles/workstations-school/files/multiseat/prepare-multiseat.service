@@ -1,0 +1,13 @@
+[Unit]
+Description=Prepare multiseat setup
+Requires=systemd-udev-settle.service
+After=systemd-udev-settle.service
+Before=systemd-user-sessions.service
+
+[Service]
+ExecStart=/usr/libexec/make-multiseat-udev-rules.py
+Type=oneshot
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

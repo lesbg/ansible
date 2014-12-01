@@ -1,0 +1,10 @@
+---
+# file: roles/common/tasks/disable-firewalld.yml
+
+- name: be sure firewalld is installed
+  action: yum pkg=firewalld state=installed 
+  tags: firewalld
+ 
+- name: be sure firewalld is stopped and disabled
+  service: name=firewalld state=stopped enabled=no
+  tags: firewalld

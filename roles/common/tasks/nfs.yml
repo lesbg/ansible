@@ -55,12 +55,16 @@
    - install
    - nfs
 
-- name: install bindfs
-  yum: name=bindfs state=installed
+- name: install bindfs, nfs-utils and rpcbind
+  yum: name={{item}} state=installed
+  with_items:
+   - bindfs
+   - rpcbind
+   - nfs-utils
   tags:
    - install
    - nfs
-  
+
 - name: setup NFS units
   copy: src={{item}} dest=/usr/lib/systemd/system/{{item}} mode=0644
   with_items:

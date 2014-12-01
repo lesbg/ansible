@@ -1,0 +1,2 @@
+# VendorID:DeviceID, 	# of logical hubs
+1a40:0101,		2

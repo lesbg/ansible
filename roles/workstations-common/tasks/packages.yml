@@ -1,11 +1,27 @@
 ---
 # file: roles/workstations/tasks/packages.yml
+- name: install school repository
+  copy: src=school.repo dest=/etc/yum.repos.d
+  tags:
+   - install
+   - packages
+   - repos
+
+- name: clear cache cookies
+  command: find /var/cache/yum -iname cachecookie -delete
+  tags:
+   - install
 
 - name: install GNOME Desktop
-  yum: name="@gnome-desktop-environment"
+  command: yum -y group install "gnome-desktop-environment"
   tags:
    - install
 #  command: yum -y groupinstall "GNOME Desktop"
+
+- name: install langpack support
+  yum: name="yum-langpacks"
+  tags:
+   - install
 
 - name: install Arabic support
   command: yum -y langinstall "ar_LB"

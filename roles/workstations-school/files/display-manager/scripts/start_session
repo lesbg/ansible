@@ -1,0 +1,28 @@
+#!/bin/sh
+
+PID=`ps ax | grep xscreen | grep -v export | grep -v grep | grep " $DISPLAY\$" | awk '{ print $1 }'`
+kill $PID
+xset dpms 0 0 0
+xset -dpms
+xset s off
+
+HOME_DIR=`eval echo ~$USER`
+
+if [ ! -d "$HOME_DIR" ] && [ "$USER" != "student" ]; then
+	mkdir -p "$HOME_DIR"
+	cp -a /etc/skel/* "$HOME_DIR"
+	cp -a /etc/skel/.[a-zA-Z0-9]* "$HOME_DIR"
+	chown -R "$USER"."nobody" "$HOME_DIR"
+	chmod 700 "$HOME_DIR"
+fi
+
+if [ "$USER" == "student" ]; then
+	if [ -d /usr/share/student ]; then
+		rsync -avHPx --delete /usr/share/student /tmp
+		chown student /tmp/student -R
+	else
+		mkdir -p /tmp/student
+	fi
+	chmod 700 /tmp/student
+fi
+exit 0

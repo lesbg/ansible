@@ -1,0 +1,11 @@
+---
+# file: roles/workstations-school/tasks/ipa.yml
+
+- name: install FreeIPA client
+  yum: name={{item}} state=present
+  with_items:
+   - freeipa-client
+   - freeipa-admintools
+  tags:
+   - install
+   - accounts

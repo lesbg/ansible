@@ -1,0 +1,54 @@
+---
+# file: roles/workstations-school/tasks/display-maanger.yml
+
+- name: install LightDM
+  yum: name={{item}} state=present
+  with_items:
+   - lightdm
+   - lightdm-qt
+   - lightdm-kde
+  tags:
+   - install
+   - display-manager
+
+- name: remove lightdm-gtk
+  yum: name=lightdm-gtk state=absent
+  tags:
+   - install
+   - display-manager
+
+- name: set LightDM as display manager
+  file: path=/etc/systemd/system/display-manager.service src=/usr/lib/systemd/system/lightdm.service state=link
+  tags:
+   - install
+   - display-manager
+
+- name: set graphic boot as default boot target
+  file: path=/etc/systemd/system/default.target src=/lib/systemd/system/graphical.target state=link
+  tags:
+   - install
+   - display-manager
+
+- name: copy school theme files for LightDM
+  copy: src=display-manager/lightdm-kde/lesbg dest=/usr/share/kde4/apps/lightdm-kde-greeter/themes/
+  tags:
+   - install
+   - display-manager
+
+- name: copy school config files for LightDM
+  copy: src=display-manager/conf/ dest=/etc/lightdm/
+  tags:
+   - install
+   - display-manager
+
+- name: copy school scripts for LightDM
+  copy: src=display-manager/scripts/ dest=/etc/lightdm/ mode=0755
+  tags:
+   - install
+   - display-manager
+
+- name: set default session to GNOME
+  file: src=gnome.desktop path=/usr/share/xsessions/default.desktop state=link
+  tags:
+   - install
+   - display-manager

@@ -3,3 +3,10 @@
 - include: ../../workstations-common/tasks/main.yml
 
 - include: ../../common/tasks/nfs.yml
+
+- include: ../../common/tasks/disable-firewalld.yml
+
+- include: logos.yml
+- include: multiseat.yml
+- include: display-manager.yml
+- include: ipa.yml
