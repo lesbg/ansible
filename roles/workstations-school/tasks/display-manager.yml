@@ -7,6 +7,8 @@
    - lightdm
    - lightdm-qt
    - lightdm-kde
+   - xscreensaver-gl-extras
+   - x11vnc
   tags:
    - install
    - display-manager
@@ -43,6 +45,24 @@
 
 - name: copy school scripts for LightDM
   copy: src=display-manager/scripts/ dest=/etc/lightdm/ mode=0755
+  tags:
+   - install
+   - display-manager
+
+- name: install lesbg greeter (needed to keep kde greeter from ever quitting)
+  copy: src=display-manager/lightdm-lesbg-greeter dest=/usr/sbin/ mode=0755
+  tags:
+   - install
+   - display-manager
+
+- name: install lesbg greeter session file
+  copy: src=display-manager/lightdm-lesbg-greeter.desktop dest=/usr/share/xgreeters/
+  tags:
+   - install
+   - display-manager
+
+- name: copy screensaver config
+  copy: src=display-manager/xscreensaver dest=/var/lib/lightdm
   tags:
    - install
    - display-manager
