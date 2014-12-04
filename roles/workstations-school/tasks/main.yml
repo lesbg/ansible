@@ -11,3 +11,4 @@
 - include: multiseat.yml
 - include: display-manager.yml
 - include: ipa.yml
+- include: selinux.yml

@@ -1,0 +1,7 @@
+---
+# file: roles/common/handlers/selinux.yml
+- name: set selinux to permissive on running system
+  command: setenforce 0
+
+- name: set selinux to enforcing on running system
+  command: setenforce 1

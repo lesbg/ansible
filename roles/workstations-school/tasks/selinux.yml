@@ -1,0 +1,13 @@
+---
+# file: roles/workstations-school/tasks/selinux.yml
+
+# Selinux must be disabled until the following are fixed:
+# - xscreensaver can't access nfs folder under lightdm user, but denials aren't logged
+
+- name: set selinux to permissive
+  lineinfile: dest=/etc/sysconfig/selinux regexp=^SELINUX= line=SELINUX=permissive
+  notify:
+   - set selinux to permissive on running system
+  tags:
+   - install
+   - selinux
