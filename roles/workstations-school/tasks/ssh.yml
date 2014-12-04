@@ -13,7 +13,7 @@
    - install
    - ssh
 
-- name: install public ssh keys for school workstations
+- name: install public ssh host keys for school workstations
   copy: src=ssh-keys/{{item}} dest=/etc/ssh/ mode=0644
   notify:
    - restart ssh server
@@ -24,7 +24,7 @@
    - install
    - ssh
 
-- name: install private ssh keys for school workstations
+- name: install private ssh host keys for school workstations
   copy: src=ssh-keys/{{item}} dest=/etc/ssh/ mode=0640 group=ssh_keys
   notify:
    - restart ssh server
@@ -34,3 +34,33 @@
   tags:
    - install
    - ssh
+
+- name: create root user .ssh directory
+  file: dest=/root/.ssh state=directory mode=0600
+  tags:
+   - install
+   - ssh
+
+- name: install public ssh root user files for school workstations
+  copy: src=ssh-keys/{{item}} dest=/root/.ssh/ mode=0644
+  with_items:
+   - id_ecdsa.pub
+   - known_hosts
+  tags:
+   - install
+   - ssh
+
+- name: install public ssh root user authorized keys for school workstations
+  lineinfile: dest=/root/.ssh/authorized_keys state=present line="{{ lookup('file', 'ssh-keys/authorized_keys') }}"
+  tags:
+   - install
+   - ssh
+
+- name: install private ssh root user key for school workstations
+  copy: src=ssh-keys/{{item}} dest=/root/.ssh/ mode=0640 group=ssh_keys
+  with_items:
+   - id_ecdsa
+  tags:
+   - install
+   - ssh
+
