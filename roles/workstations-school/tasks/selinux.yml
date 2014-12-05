@@ -5,9 +5,13 @@
 # - xscreensaver can't access nfs folder under lightdm user, but denials aren't logged
 
 - name: set selinux to permissive
-  lineinfile: dest=/etc/sysconfig/selinux regexp=^SELINUX= line=SELINUX=permissive
-  notify:
-   - set selinux to permissive on running system
+  selinux: policy=targeted state=permissive
+  tags:
+   - install
+   - selinux
+
+- name: set selinux nfs home dirs boolean
+  seboolean: name=use_nfs_home_dirs state=yes persistent=yes
   tags:
    - install
    - selinux

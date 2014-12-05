@@ -8,4 +8,3 @@
 - include: yum.yml
 - include: nfs.yml
 - include: ssh.yml
-- include: selinux.yml
