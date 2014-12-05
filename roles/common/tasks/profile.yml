@@ -2,7 +2,7 @@
 # file: roles/common/tasks/profile.yml
 
 - name: copy profile for dir and paper settings
-  copy: src={{item}} force=no dest=/etc/profile.d mode=0644
+  copy: src={{item}} force=no dest=/etc/profile.d/ mode=0644
   with_items:
    - dir.sh
    - paper.sh
