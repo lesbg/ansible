@@ -47,6 +47,12 @@
    - install
    - display-manager
 
+- name: copy screensaver config
+  copy: src=display-manager/xscreensaver dest=/var/lib/lightdm
+  tags:
+   - install
+   - display-manager
+
 - name: set default session to GNOME
   file: src=gnome.desktop path=/usr/share/xsessions/default.desktop state=link
   tags:
