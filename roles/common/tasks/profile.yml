@@ -1,5 +1,11 @@
 ---
 # file: roles/common/tasks/profile.yml
 
-- name: copy dir.sh to /etc/profile.d
-  copy: src=dir.sh force=no dest=/etc/profile.d mode=0644
+- name: copy profile for dir and paper settings
+  copy: src={{item}} force=no dest=/etc/profile.d mode=0644
+  with_items:
+   - dir.sh
+   - paper.sh
+  tags:
+   - install
+   - profile
