@@ -1,9 +1,0 @@
-#!/bin/sh
-
-retval=15
-while [ "$retval" -eq 15 ]; do
-	/usr/sbin/lightdm-kde-greeter
-	retval="$?"
-done
-
-exit $retval
