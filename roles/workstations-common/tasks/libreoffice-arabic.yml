@@ -1,0 +1,7 @@
+---
+# file: roles/workstations-common/tasks/libreoffice-arabic.yml
+- name: enable Arabic in LibreOffice
+  copy: src=arabic-default.xcd dest=/usr/lib64/libreoffice/share/registry/
+  tags:
+   - install
+   - libreoffice
