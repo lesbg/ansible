@@ -1,0 +1,8 @@
+---
+# file: roles/workstations-school/tasks/student-skel.yml
+
+- name: Install student skeleton files
+  copy: src=student dest=/usr/share/
+  tags:
+   - install
+   - student-skel

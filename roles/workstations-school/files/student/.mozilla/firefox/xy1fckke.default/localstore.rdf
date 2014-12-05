@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<RDF:RDF xmlns:NS1="http://downloadhelper.net/1.0#"
+         xmlns:NC="http://home.netscape.com/NC-rdf#"
+         xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <RDF:Seq RDF:about="rdf:#$1FhoN1">
+  </RDF:Seq>
+  <RDF:Description RDF:about="rdf:#$1FhoN1"
+                   NS1:value="mp4/-ab 160k -ac 2 -acodec libfaac -crf 22 -f mp4 -threads 0 -vcodec libx264"
+                   NS1:label="Galaxy Tab" />
+  <RDF:Seq RDF:about="rdf:#$7FhoN1">
+  </RDF:Seq>
+  <RDF:Description RDF:about="rdf:#$7FhoN1"
+                   NS1:value="mpeg/-f mpeg2video -target pal-dvd"
+                   NS1:label="MPEG-2 DVD (PAL)" />
+  <RDF:Description RDF:about="chrome://browser/content/preferences/preferences.xul#BrowserPreferences"
+                   lastSelected="paneMain"
+                   screenX="306"
+                   screenY="228" />
+  <RDF:Seq RDF:about="rdf:#$0FhoN1">
+  </RDF:Seq>
+  <RDF:Description RDF:about="rdf:#$0FhoN1"
+                   NS1:value="m4v/-acodec libfaac -b 548kbps -f mp4 -r 24 -s 480x320 -vcodec mpeg4"
+                   NS1:label="iPhone" />
+  <RDF:Seq RDF:about="rdf:#$aFhoN1">
+  </RDF:Seq>
+  <RDF:Description RDF:about="rdf:#$aFhoN1"
+                   NS1:value="mp4/-ab 160k -ac 2 -acodec libfaac -crf 22 -f mp4 -threads 0 -vcodec libx264"
+                   NS1:label="Galaxy Tab" />
+  <RDF:Description RDF:about="chrome://browser/content/browser.xul#sidebar-box"
+                   sidebarcommand=""
+                   width=""
+                   src="" />
+  <RDF:Seq RDF:about="rdf:#$8FhoN1">
+  </RDF:Seq>
+  <RDF:Description RDF:about="rdf:#$8FhoN1"
+                   NS1:value="mpeg/-f mpeg2video -target ntsc-dvd"
+                   NS1:label="MPEG-2 DVD (NTSC)" />
+  <RDF:Seq RDF:about="rdf:#$4FhoN1">
+  </RDF:Seq>
+  <RDF:Description RDF:about="rdf:#$4FhoN1"
+                   NS1:value="mov/-f mov -sameq"
+                   NS1:label="Quicktime (MOV)" />
+  <RDF:Description RDF:about="chrome://browser/content/browser.xul">
+    <NC:persist RDF:resource="chrome://browser/content/browser.xul#main-window"/>
+    <NC:persist RDF:resource="chrome://browser/content/browser.xul#addon-bar"/>
+    <NC:persist RDF:resource="chrome://browser/content/browser.xul#navigator-toolbox"/>
+    <NC:persist RDF:resource="chrome://browser/content/browser.xul#sidebar-box"/>
+    <NC:persist RDF:resource="chrome://browser/content/browser.xul#sidebar-title"/>
+  </RDF:Description>
+  <RDF:Seq RDF:about="rdf:#$9FhoN1">
+  </RDF:Seq>
+  <RDF:Description RDF:about="rdf:#$9FhoN1"
+                   NS1:value="mp3/-ab 128k -f mp3"
+                   NS1:label="MP3" />
+  <RDF:Description RDF:about="chrome://browser/content/browser.xul#addon-bar"
+                   collapsed="false" />
+  <RDF:Seq RDF:about="rdf:#$ZEhoN1">
+  </RDF:Seq>
+  <RDF:Description RDF:about="rdf:#$ZEhoN1"
+                   NS1:value="mpg/-acodec mp2 -b 800kbps -f mpeg -r 24 -vcodec mpeg1video"
+                   NS1:label="MPEG (mpeg1+mp2)" />
+  <RDF:Description RDF:about="chrome://browser/content/browser.xul#main-window"
+                   width="994"
+                   height="959"
+                   screenX="50"
+                   screenY="27"
+                   sizemode="normal" />
+  <RDF:Seq RDF:about="rdf:#$5FhoN1">
+  </RDF:Seq>
+  <RDF:Description RDF:about="rdf:#$5FhoN1"
+                   NS1:value="avi/-acodec libmp3lame -f avi -vcodec mpeg4"
+                   NS1:label="AVI (mpeg4+mp3)" />
+  <RDF:Description RDF:about="chrome://browser/content/browser.xul#sidebar-title"
+                   value="" />
+  <RDF:Seq RDF:about="rdf:#$2FhoN1">
+  </RDF:Seq>
+  <RDF:Description RDF:about="rdf:#$2FhoN1"
+                   NS1:value="3gp/-ab 12kbps -ac 1 -acodec libfaac -ar 8000 -b 64kbps -f 3gp -r 24 -s 176x144 -vcodec h263"
+                   NS1:label="Mobile 3GP (Qcif)" />
+  <RDF:Seq RDF:about="http://downloadhelper.net/1.0#conv-confs">
+    <RDF:li RDF:resource="rdf:#$ZEhoN1"/>
+    <RDF:li RDF:resource="rdf:#$.EhoN1"/>
+    <RDF:li RDF:resource="rdf:#$+EhoN1"/>
+    <RDF:li RDF:resource="rdf:#$0FhoN1"/>
+    <RDF:li RDF:resource="rdf:#$1FhoN1"/>
+    <RDF:li RDF:resource="rdf:#$2FhoN1"/>
+    <RDF:li RDF:resource="rdf:#$3FhoN1"/>
+    <RDF:li RDF:resource="rdf:#$4FhoN1"/>
+    <RDF:li RDF:resource="rdf:#$5FhoN1"/>
+    <RDF:li RDF:resource="rdf:#$6FhoN1"/>
+    <RDF:li RDF:resource="rdf:#$7FhoN1"/>
+    <RDF:li RDF:resource="rdf:#$8FhoN1"/>
+    <RDF:li RDF:resource="rdf:#$9FhoN1"/>
+    <RDF:li RDF:resource="rdf:#$aFhoN1"/>
+  </RDF:Seq>
+  <RDF:Description RDF:about="http://downloadhelper.net/1.0#conv-confs"
+                   NS1:conf-inited="true" />
+  <RDF:Description RDF:about="chrome://browser/content/browser.xul#navigator-toolbox"
+                   abp-iconposition="visible,addon-bar,addonbar-closebutton" />
+  <RDF:Description RDF:about="chrome://browser/content/preferences/preferences.xul">
+    <NC:persist RDF:resource="chrome://browser/content/preferences/preferences.xul#BrowserPreferences"/>
+  </RDF:Description>
+  <RDF:Seq RDF:about="rdf:#$3FhoN1">
+  </RDF:Seq>
+  <RDF:Description RDF:about="rdf:#$3FhoN1"
+                   NS1:value="wmv/-ab 128000 -ac 2 -acodec wmav2 -b 640000 -bufsize 2048000 -f asf -maxrate 1350000 -s 320x240 -vcodec wmv2"
+                   NS1:label="Zune" />
+  <RDF:Seq RDF:about="rdf:#$.EhoN1">
+  </RDF:Seq>
+  <RDF:Description RDF:about="rdf:#$.EhoN1"
+                   NS1:value="wmv/-ab 56k -ac 2 -acodec wmav2 -ar 44100 -b 3000kbps -f asf -vcodec wmv2"
+                   NS1:label="WMV (Windows Media Player)" />
+  <RDF:Seq RDF:about="rdf:#$6FhoN1">
+  </RDF:Seq>
+  <RDF:Description RDF:about="rdf:#$6FhoN1"
+                   NS1:value="mp4/-ac 2 -acodec libmp3lame -ar 44100 -f avi -vcodec mpeg4"
+                   NS1:label="MPEG-4 " />
+  <RDF:Seq RDF:about="rdf:#$+EhoN1">
+  </RDF:Seq>
+  <RDF:Description RDF:about="rdf:#$+EhoN1"
+                   NS1:value="m4v/-acodec libfaac -b 274kbps -f mp4 -r 24 -s 320x240 -vcodec mpeg4"
+                   NS1:label="iPod" />
+</RDF:RDF>
