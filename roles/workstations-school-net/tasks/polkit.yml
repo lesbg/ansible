@@ -1,0 +1,8 @@
+---
+# file: roles/workstations-school/tasks/polkit.yml
+
+- name: Install network workstation policy kit definitions
+  copy: src=30-lesbg-desktop.rules dest=/etc/polkit-1/rules.d/
+  tags:
+   - install
+   - polkit

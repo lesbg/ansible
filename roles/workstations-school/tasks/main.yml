@@ -10,5 +10,7 @@
 - include: logos.yml
 - include: multiseat.yml
 - include: display-manager.yml
+- include: polkit.yml
 - include: ipa.yml
 - include: selinux.yml
+- include: student-skel.yml

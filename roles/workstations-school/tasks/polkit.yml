@@ -1,0 +1,8 @@
+---
+# file: roles/workstations-school/tasks/polkit.yml
+
+- name: Install school-wide policy kit definitions
+  copy: src=20-lesbg-mandatory.rules dest=/etc/polkit-1/rules.d/
+  tags:
+   - install
+   - polkit

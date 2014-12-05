@@ -1,0 +1,34 @@
+polkit.addRule(function(action, subject) {
+    if (action.id == "org.freedesktop.NetworkManager.network-control" || 
+        action.id == "org.freedesktop.packagekit.system-sources-configure" ||
+        action.id == "org.freedesktop.packagekit.system-rollback" ||
+        action.id == "org.freedesktop.NetworkManager.enable-disable-network" ||
+        action.id == "org.freedesktop.NetworkManager.settings.modify.own" ||
+        action.id == "org.freedesktop.NetworkManager.settings.modify.system" ||
+        action.id == "org.freedesktop.NetworkManager.settings.modify.hostname" ||
+        action.id == "org.freedesktop.packagekit.system-network-proxy-configure" ||
+        action.id.indexOf("org.freedesktop.consolekit.system.") == 0 ||
+        action.id.indexOf("org.gnome.clockapplet.") == 0) { 
+        return polkit.Result.AUTH_ADMIN;
+    }
+});
+
+polkit.addRule(function(action, subject) {
+    if (action.id == "org.freedesktop.packagekit.system-update" ||
+        action.id == "org.freedesktop.packagekit.package-remove" ||
+        action.id == "org.freedesktop.packagekit.package-install" ||
+        action.id == "org.freedesktop.packagekit.cancel-foreign") {
+        return polkit.Result.AUTH_ADMIN_KEEP;
+    }
+});
+
+polkit.addRule(function(action, subject) {
+    if (action.id == "org.freedesktop.upower.suspend" || 
+        action.id == "org.freedesktop.upower.hibernate" ||
+        action.id == "org.freedesktop.login1.suspend-multiple-sessions" || 
+        action.id == "org.freedesktop.login1.hibernate-multiple-sessions" ||
+        action.id == "org.freedesktop.login1.reboot-multiple-sessions" || 
+        action.id == "org.freedesktop.login1.power-off-multiple-sessions") {
+        return polkit.Result.NO;
+    }
+});

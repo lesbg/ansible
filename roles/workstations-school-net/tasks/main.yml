@@ -1,7 +1,6 @@
 ---
 # file: roles/workstations-school-net/tasks/main.yml
+
 - include: ../../workstations-school/tasks/main.yml
 
-#- include: ../../common/tasks/rpmfusion.yml
-#- include: ../../common/tasks/nfs.yml
-#- include: packages.yml
+- include: polkit.yml
