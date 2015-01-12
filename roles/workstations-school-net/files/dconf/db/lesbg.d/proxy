@@ -1,0 +1,17 @@
+[system/proxy]
+mode='manual'
+use-same-proxy=true
+ignore-hosts=['localhost', '127.0.0.0/8', '10.5.0.0/16', '10.10.0.0/16', '10.15.0.0/16', '.local.lesbg.com', '.lesbg.loc', '.lest.loc', '.lesaz.loc', 'local.lesbg.com', 'lesson.lesbg.com']
+
+[system/proxy/http]
+enabled=true
+host='proxy'
+port=3128
+
+[system/proxy/https]
+host='proxy'
+port=3128
+
+[system/proxy/ftp]
+host='proxy'
+port=3128

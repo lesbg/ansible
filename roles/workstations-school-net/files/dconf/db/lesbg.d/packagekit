@@ -1,0 +1,13 @@
+[org/gnome/packagekit]
+enable-codec-helper=false
+enable-font-helper=false
+enable-mime-type-helper=false
+
+[org/gnome/settings-daemon/plugins/updates]
+active=false
+frequency-get-updates=0
+frequency-get-upgrades=0
+frequency-refresh-cache=0
+frequency-updates-notification=0
+connection-use-mobile=false
+connection-use-wifi=false

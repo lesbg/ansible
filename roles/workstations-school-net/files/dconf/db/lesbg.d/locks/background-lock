@@ -1,0 +1,14 @@
+/org/gnome/desktop/background/color-shading-type
+/org/gnome/desktop/background/draw-background
+/org/gnome/desktop/background/picture-opacity
+/org/gnome/desktop/background/picture-options
+/org/gnome/desktop/background/picture-uri
+/org/gnome/desktop/background/primary-color
+/org/gnome/desktop/background/secondary-color
+/org/gnome/desktop/interface/cursor-theme
+/org/gnome/desktop/interface/font-name
+/org/gnome/desktop/interface/gtk-theme
+/org/gnome/desktop/interface/icon-theme
+/org/gnome/desktop/wm/preferences/theme
+/org/gnome/shell/extensions/user-theme/name
+/org/gnome/shell/overrides/button-layout

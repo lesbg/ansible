@@ -1,0 +1,8 @@
+/org/freedesktop/tracker/miner/files/crawling-interval
+/org/freedesktop/tracker/miner/files/enable-monitors
+/org/freedesktop/tracker/miner/files/enable-writeback
+/org/freedesktop/tracker/miner/files/index-recursive-directories
+/org/freedesktop/tracker/miner/files/index-single-directories
+/org/freedesktop/tracker/miner/files/sched-idle
+/org/freedesktop/tracker/miner/files/throttle
+/org/freedesktop/tracker/extract/sched-idle

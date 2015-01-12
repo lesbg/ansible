@@ -1,0 +1,8 @@
+[org/gnome/desktop/screensaver]
+idle-activation-enabled=false
+
+[org/gnome/desktop/session]
+idle-delay=2592000
+
+[org/gnome/settings-daemon/plugins/power]
+active=false

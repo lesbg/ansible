@@ -1,0 +1,10 @@
+/system/proxy/mode
+/system/proxy/use-same-proxy
+/system/proxy/ignore-hosts
+/system/proxy/http/enabled
+/system/proxy/http/host
+/system/proxy/http/port
+/system/proxy/https/host
+/system/proxy/https/port
+/system/proxy/socks/host
+/system/proxy/socks/port

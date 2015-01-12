@@ -1,0 +1,5 @@
+---
+# file: roles/common/handlers/dconf.yml
+
+- name: update dconf database
+  command: dconf update

@@ -1,0 +1,13 @@
+---
+# file: roles/workstations-school/tasks/dconf.yml
+
+- name: Install dconf settings for Arabic support
+  copy: src=dconf/{{item}} dest=/etc/dconf/
+  notify:
+   - update dconf database
+  with_items:
+   - profile
+   - db
+  tags:
+   - install
+   - dconf
