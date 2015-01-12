@@ -3,4 +3,7 @@
 
 - include: ../../workstations-school/tasks/main.yml
 
+- include: ident.yml
+- include: dconf.yml
 - include: polkit.yml
+- include: demo.yml
