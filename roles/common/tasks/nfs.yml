@@ -79,3 +79,4 @@
    - install
    - nfs
 
+- meta: flush_handlers
