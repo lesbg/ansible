@@ -1,0 +1,59 @@
+#!/bin/sh
+UUID=`uuidgen`
+HOME=`echo ~`
+(
+echo "10"
+rsync -rplv --delete /usr/share/os_images/.VirtualBox/ ~/.lesvirt
+echo "20"
+sed -i s/"{username}"/"$USER"/g ~/.lesvirt/Machines/virt.vbox
+sed -i s/"new_uuid"/"$UUID"/g ~/.lesvirt/Machines/virt.vbox
+cp -a ~/.lesvirt/Machines/Snapshots.orig/"{33bf5982-3a66-4da8-8526-771bdda82f37}.vdi" ~/.lesvirt/Machines/Snapshots/"{$UUID}".vdi
+echo "30"
+sleep 0.1
+echo "35"
+sleep 0.1
+echo "40"
+sleep 0.1
+echo "45"
+sleep 0.1
+echo "50"
+sleep 0.1
+echo "55"
+sleep 0.1
+echo "60"
+sleep 0.1
+echo "65"
+sleep 0.1
+echo "70"
+sleep 0.1
+echo "75"
+sleep 0.1
+echo "80"
+sleep 0.1
+echo "85"
+sleep 0.1
+echo "90"
+sleep 0.1
+VBOX_USER_HOME=$HOME/.lesvirt VBoxManage internalcommands sethduuid ~/.lesvirt/Machines/Snapshots/"{$UUID}".vdi "$UUID"
+echo "95"
+sync
+echo "100"
+) |
+zenity --progress \
+  --title="Starting VM" \
+  --text="Initializing VM environment" \
+  --percentage=0 \
+  --auto-close \
+  --no-cancel
+#VBoxManage registervm ~/.lesvirt/Machines/Virtual\ Machine/Virtual\ Machine.xml
+RETVAL=1
+while [ "$RETVAL" -ne "0" ]; do
+	VBOX_USER_HOME=$HOME/.lesvirt VirtualBox --startvm "Virt"
+	RETVAL="$?"
+	sleep 1;
+done
+sleep 5
+rm -rf ~/.lesvirt
+if [ -e "/var/tmp/{$UUID}.vdi" ]; then
+	rm -f "/var/tmp/{$UUID}.vdi"
+fi

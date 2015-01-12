@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Windows 2000
+Comment=Start Virtual Machine
+Exec=/usr/bin/startvirt
+Icon=display.png
+Terminal=false
+Type=Application
+Categories=GNOME;GTK;Utility;
+StartupNotify=false
+MimeType=

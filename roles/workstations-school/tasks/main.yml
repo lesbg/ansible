@@ -10,7 +10,9 @@
 - include: logos.yml
 - include: multiseat.yml
 - include: display-manager.yml
+- include: dconf.yml
 - include: polkit.yml
 - include: ipa.yml
 - include: selinux.yml
 - include: student-skel.yml
+- include: virt.yml
