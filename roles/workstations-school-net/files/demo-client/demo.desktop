@@ -1,0 +1,9 @@
+# KDE Config File
+[Desktop Entry]
+Type=Application
+Exec=demo-client
+Icon=gnome-remote-desktop
+Terminal=false
+Name=Get Demo from Teacher
+GenericName=Remote Desktop Connection
+Categories=Network;

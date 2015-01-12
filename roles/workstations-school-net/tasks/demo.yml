@@ -1,0 +1,29 @@
+---
+# file: roles/workstations-school-net/tasks/demo.yml
+
+- name: install GTK VNC python library
+  yum: name=gtk-vnc-python
+  tags:
+   - install
+   - demo
+
+- name: install demo-client share
+  copy: src=demo-client/share/demo-client dest=/usr/share/
+  tags:
+   - install
+   - demo
+
+- name: install demo-client binary
+  copy: src=demo-client/demo-client dest=/usr/bin mode=0755
+  tags:
+   - install
+   - demo
+
+- name: install demo-client desktop file
+  copy: src=demo-client/demo.desktop dest=/usr/share/applications
+  notify:
+   - setup desktop files
+  tags:
+   - install
+   - demo
+
