@@ -53,12 +53,12 @@ cp $LIGHTDM_XAUTH /var/run/lightdm/lightdm/xauth-$SNUM
 chown lightdm.lightdm /var/run/lightdm/lightdm/xauth-$SNUM
 /usr/sbin/runuser -s /bin/sh -c "export XAUTHORITY=/var/run/lightdm/lightdm/xauth-$SNUM; /usr/bin/xscreensaver -display $DISPLAY" lightdm &
 
-SESSION_IDS=`loginctl list-sessions | grep $SEAT | grep -v gdm | awk '{ print $1 }'`
-while [ "q$SESSION_IDS" != "q" ]; do
-	for session in $SESSION_IDS; do
-		loginctl kill-session $session
-	done
-	SESSION_IDS=`loginctl list-sessions | grep $SEAT | grep -v gdm | awk '{ print $1 }'`
-done
+#SESSION_IDS=`loginctl list-sessions | grep $SEAT | grep -v gdm | awk '{ print $1 }'`
+#while [ "q$SESSION_IDS" != "q" ]; do
+#	for session in $SESSION_IDS; do
+#		loginctl kill-session $session
+#	done
+#	SESSION_IDS=`loginctl list-sessions | grep $SEAT | grep -v gdm | awk '{ print $1 }'`
+#done
 
 exit 0

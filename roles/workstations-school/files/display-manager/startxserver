@@ -1,0 +1,3 @@
+#!/bin/sh
+sleep 2
+exec /lib/systemd/systemd-multi-seat-x -background none "$@"
