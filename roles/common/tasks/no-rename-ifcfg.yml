@@ -1,0 +1,13 @@
+---
+# file: roles/common/tasks/no-rename-ifcfg.yml
+
+- name: remove udev rules to name network interfaces
+  file: path=/etc/udev/rules.d/{{item}} state=link src=/dev/null
+  with_items:
+   - 60-net.rules
+   - 71-biosdevname.rules
+   - 80-net-name-slot.rules
+   - 80-net-setup-link.rules
+  tags:
+   - install
+   - no-rename-ifcfg
