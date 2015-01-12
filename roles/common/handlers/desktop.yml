@@ -1,0 +1,13 @@
+---
+# file: roles/common/handlers/desktop.yml
+
+- name: setup desktop files
+  command: /bin/true
+  notify: update icon database - step 1
+
+- name: update icon database - step 1
+  command: /bin/touch --no-create /usr/share/icons/hicolor
+  notify: update icon database - step 2
+
+- name: update icon database - step 2
+  command: /usr/bin/gtk-update-icon-cache /usr/share/icons/hicolor

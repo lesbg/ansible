@@ -8,3 +8,5 @@
 - include: yum.yml
 - include: nfs.yml
 - include: ssh.yml
+- include: dconf.yml
+- include: desktop.yml
