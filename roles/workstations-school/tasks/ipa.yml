@@ -9,3 +9,9 @@
   tags:
    - install
    - accounts
+
+- name: join LESB&G FreeIPA domain
+  command: /networld/hd_images/linux/f19/autojoin.sh
+  tags:
+   - install
+   - accounts
