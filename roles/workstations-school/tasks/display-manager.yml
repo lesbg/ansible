@@ -64,3 +64,12 @@
   tags:
    - install
    - display-manager
+
+- name: install xscreensaver
+  yum: name={{item}} state=present
+  with_items:
+   - xscreensaver-gl-extras
+   - xscreensaver-gl-base
+  tags:
+   - install
+   - display-manager
