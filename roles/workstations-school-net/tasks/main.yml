@@ -7,3 +7,5 @@
 - include: dconf.yml
 - include: polkit.yml
 - include: demo.yml
+- include: ev3.yml
+- include: power-button.yml

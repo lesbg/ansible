@@ -1,0 +1,13 @@
+---
+# file: roles/workstations-school-net/tasks/ev3.yml
+
+- name: Install EV3 network config for school desktops
+  copy: src=ev3/ifcfg-{{item}} dest=/etc/sysconfig/network-scripts
+  with_items:
+   - EV3-1
+   - EV3-2
+   - EV3-3
+   - EV3-boss
+  tags:
+   - install
+   - ev3
