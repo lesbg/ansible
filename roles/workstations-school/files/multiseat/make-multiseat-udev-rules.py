@@ -84,8 +84,15 @@ def get_graphics(id_path):
 def get_video():
     seat_list = []
     for device in udev_context.list_devices(subsystem='drm'):
+        done = False
         if device.get('ID_FOR_SEAT') is None:
             continue  # No seat ID, not primary card
+        for i in seat_list:
+            if device.get('ID_FOR_SEAT') == i[0]:
+                done = True
+                break
+        if done:
+            continue
         graphics_seat_id = get_graphics(device.get('ID_PATH'))
         seat_list.append((device.get('ID_FOR_SEAT'), graphics_seat_id)) 
     return seat_list
@@ -102,12 +109,13 @@ hubs.sort()
 hubs.reverse()
 vcards = get_video()
 vcards.sort()
+print vcards
 
 seats = len(vcards) if len(vcards) < len(hubs) else len(hubs)
 if len(hubs) < len(vcards):
-    print "This computer is currently short a hub"
+    print "This computer is currently short a hub: %i hubs, %i video cards" % (len(hubs), len(vcards))
 elif len(vcards) < len(hubs):
-    print "This computer has more usb hubs than video cards"
+    print "This computer has more usb hubs than video cards: %i hubs, %i video cards" % (len(hubs), len(vcards))
 
 if seats <= 1: # Don't bother with multiseat rules with <= 1 hub
     if os.path.exists(UDEV_PATH):
