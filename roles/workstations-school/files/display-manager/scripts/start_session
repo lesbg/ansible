@@ -12,7 +12,7 @@ if [ ! -d "$HOME_DIR" ] && [ "$USER" != "student" ]; then
 	mkdir -p "$HOME_DIR"
 	cp -a /etc/skel/* "$HOME_DIR"
 	cp -a /etc/skel/.[a-zA-Z0-9]* "$HOME_DIR"
-	chown -R "$USER"."nobody" "$HOME_DIR"
+	chown -R "$USER"."$USER" "$HOME_DIR"
 	chmod 700 "$HOME_DIR"
 fi
 
