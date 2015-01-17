@@ -1,0 +1,59 @@
+#!/bin/sh
+OUTSIDE_PICS=/netshare/networld/background_pics
+LOCAL_PICS=/usr/share/backgrounds/les
+
+OUTPUT=`xrandr | grep " connected " | awk '{ print $1 }'`
+xrandr --output $OUTPUT --auto
+
+xset dpms 0 0 0
+xset -dpms
+xset s off
+
+SEAT=`ps ax | grep "/usr/bin/X" | grep " $DISPLAY" | tr ' ' '\n' | grep -A 1 "^-seat" | tail -n 1`
+if [ "x$SEAT" == "x" ]; then
+	SEAT=seat0
+fi
+SNUM=`echo $SEAT | sed s/"seat"//g`
+SNUM=`echo $SNUM | sed s/"-"//g`
+LIGHTDM_XAUTH=`ps ax -o command | grep '/usr/libexec/X' | grep ${DISPLAY} | tr ' ' '\n' | grep -A 1 "^-auth" | tail -n 1`
+DNUM=`echo $DISPLAY | sed 's/://g'`
+ps ax | grep x11vnc | grep -q 590$DNUM
+if [ "$?" -eq 0 ]; then
+	PIDS=`ps ax | grep x11vnc | grep 590$DNUM | awk '{ print $1 }'`
+	for PID in $PIDS; do
+		kill $PID
+		sleep 0.2
+		ps ax | grep -q $PID
+		if [ "$?" -eq 0 ]; then
+			kill -9 $PID
+		fi
+	done
+fi
+x11vnc -rfbauth /root/.vnc/passwd -rfbport 590$DNUM -rfbportv6 590$DNUM -display ${DISPLAY} -forever -shared -auth `ps ax -o command | grep '/usr/bin/X' | grep ${DISPLAY} | tr ' ' '\n' | grep -A 1 "^-auth" | tail -n 1` -xrandr -loop -o /var/log/vnc-${DNUM}.log 2>/dev/null &
+
+# Prepare carousel
+USE_PICS=/usr/share/backgrounds/images
+if [ -d "$LOCAL_PICS" ]; then
+	USE_PICS="$LOCAL_PICS"
+elif [ -d "$OUTSIDE_PICS" ]; then
+	USE_PICS="$OUTSIDE_PICS"
+fi
+USE_PICS=$(printf '%q' $USE_PICS)
+grep $USE_PICS /var/lib/lightdm/.xscreensaver
+if [ "$?" -ne "0" ]; then
+	sed s\!"imageDirectory:.*$"\!"imageDirectory: $USE_PICS"\! /var/lib/lightdm/xscreensaver > /var/lib/lightdm/.xscreensaver
+fi
+
+mkdir -p /var/run/lightdm/lightdm
+chown lightdm.lightdm /var/run/lightdm
+chown lightdm.lightdm /var/run/lightdm/lightdm
+chmod 775 /var/run/lightdm
+chmod 700 /var/run/lightdm/lightdm
+rm -f /var/run/lightdm/lightdm/xauth-$DNUM
+cp $LIGHTDM_XAUTH /var/run/lightdm/lightdm/xauth-$DNUM
+chown lightdm.lightdm /var/run/lightdm/lightdm/xauth-$DNUM
+if [ -e /var/run/lightdm/lightdm/xauth-$DNUM ]; then
+	/usr/sbin/runuser -s /bin/sh -c "export XAUTHORITY=/var/run/lightdm/lightdm/xauth-$DNUM; /usr/bin/xscreensaver -display $DISPLAY" lightdm &
+fi
+
+exit 0
