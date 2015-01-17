@@ -19,13 +19,13 @@
    - virt
 
 - name: Install VirtualBox hard drive
-  local_action: synchronize: src=/networld/system_data/virt/virt.vdi dest=/usr/share/os_images/ archive=yes
+  command: rsync -avHPx /networld/system_data/virt/virt.vdi /usr/share/os_images/
   tags:
    - install
    - virt
 
 - name: Install VirtualBox hard drive snapshot
-  local_action: synchronize: src=/networld/system_data/virt/{33bf5982-3a66-4da8-8526-771bdda82f37}.vdi dest=/usr/share/os_images/.VirtualBox/Machines/Snapshots.orig/ archive=yes
+  command: rsync -avHPx /networld/system_data/virt/{33bf5982-3a66-4da8-8526-771bdda82f37}.vdi /usr/share/os_images/.VirtualBox/Machines/Snapshots.orig/
   tags:
    - install
    - virt
