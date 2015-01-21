@@ -6,7 +6,6 @@ polkit.addRule(function(action, subject) {
         action.id == "org.freedesktop.NetworkManager.settings.modify.own" ||
         action.id == "org.freedesktop.NetworkManager.settings.modify.system" ||
         action.id == "org.freedesktop.NetworkManager.settings.modify.hostname" ||
-        action.id == "org.freedesktop.packagekit.system-network-proxy-configure" ||
         action.id.indexOf("org.freedesktop.consolekit.system.") == 0 ||
         action.id.indexOf("org.gnome.clockapplet.") == 0) { 
         return polkit.Result.AUTH_ADMIN;
@@ -25,6 +24,7 @@ polkit.addRule(function(action, subject) {
 polkit.addRule(function(action, subject) {
     if (action.id == "org.freedesktop.upower.suspend" || 
         action.id == "org.freedesktop.upower.hibernate" ||
+        action.id == "org.freedesktop.packagekit.system-network-proxy-configure" ||
         action.id == "org.freedesktop.login1.suspend-multiple-sessions" || 
         action.id == "org.freedesktop.login1.hibernate-multiple-sessions" ||
         action.id == "org.freedesktop.login1.reboot-multiple-sessions" || 
