@@ -6,6 +6,7 @@
 - include: ../../common/tasks/nfs.yml
 
 - include: ident.yml
+- include: display-manager.yml
 - include: dconf.yml
 - include: polkit.yml
 - include: demo.yml
