@@ -6,7 +6,6 @@
 
 - include: ssh.yml
 - include: logos.yml
-- include: multiseat.yml
 - include: dconf.yml
 - include: polkit.yml
 - include: selinux.yml
