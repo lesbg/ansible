@@ -2,8 +2,6 @@
 # file: roles/workstations-school/tasks/main.yml
 - include: ../../workstations-common/tasks/main.yml
 
-- include: ../../common/tasks/nfs.yml
-
 - include: ../../common/tasks/disable-firewalld.yml
 
 - include: ssh.yml
@@ -12,7 +10,5 @@
 - include: display-manager.yml
 - include: dconf.yml
 - include: polkit.yml
-- include: ipa.yml
 - include: selinux.yml
 - include: student-skel.yml
-- include: virt.yml

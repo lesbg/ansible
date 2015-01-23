@@ -1,7 +1,8 @@
 ---
 # file: roles/common/tasks/main.yml
 
+- include: noop.yml
+- include: yum.yml
 - include: ntp.yml
 - include: profile.yml
-- include: yum.yml
 - include: no-rename-ifcfg.yml
