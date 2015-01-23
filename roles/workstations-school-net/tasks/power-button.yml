@@ -1,13 +1,7 @@
 ---
 # file: roles/workstations-school/tasks/power-button.yml
-- name: Create directory for power button config
-  file: dest=/etc/systemd/logind.conf.d mode=0755 state=directory
-  tags:
-   - install
-   - power-button
-
 - name: Disable power button
-  copy: src=99-power-button.conf dest=/etc/systemd/logind.conf.d/
+  copy: src=logind.conf dest=/etc/systemd/
   tags:
    - install
    - power-button
