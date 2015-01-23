@@ -1,0 +1,8 @@
+---
+# file: roles/common/tasks/noop.yml
+- name: Check root home directory
+  file: path=/root
+        follow=yes
+        state=directory 
+  tags:
+   - noop
