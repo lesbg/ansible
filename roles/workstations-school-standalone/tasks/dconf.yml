@@ -1,0 +1,12 @@
+---
+# file: roles/workstations-school-net/tasks/dconf.yml
+
+- name: Install dconf settings for school desktops
+  copy: src=dconf/{{item}} dest=/etc/dconf/
+  notify:
+   - update dconf database
+  with_items:
+   - db
+  tags:
+   - install
+   - dconf
