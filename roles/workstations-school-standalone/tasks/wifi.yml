@@ -1,0 +1,8 @@
+---
+# file: roles/workstations-school-standalone/tasks/wifi.yml
+
+- name: autoconnect to lesbg wifi hotspots
+  copy: src=network-scripts/ dest=/etc/sysconfig/network-scripts
+  tags:
+   - install
+   - network
