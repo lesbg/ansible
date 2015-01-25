@@ -13,5 +13,6 @@
 - include: demo.yml
 - include: ev3.yml
 - include: power-button.yml
-- include: ipa.yml
+- include: bookmarks.yml
+- include: ../../common/tasks/ipa.yml
 - include: virt.yml

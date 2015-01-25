@@ -1,0 +1,29 @@
+---
+# file: roles/workstations-school/tasks/ipa.yml
+
+- name: install FreeIPA client
+  yum: name={{item}} state=present
+  with_items:
+   - freeipa-client
+   - freeipa-admintools
+  tags:
+   - install
+   - accounts
+
+- name: mount location to access script
+  mount: name=/mnt src=datastore02:/netshare/networld fstype=nfs opts=nolock state=mounted
+  tags:
+   - install
+   - accounts
+
+- name: join LESB&G FreeIPA domain
+  command: /mnt/hd_images/linux/f19/autojoin.sh
+  tags:
+   - install
+   - accounts
+
+- name: umount script location
+  mount: name=/mnt src=datastore02:/netshare/networld fstype=nfs state=unmounted
+  tags:
+   - install
+   - accounts
