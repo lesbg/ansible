@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Bookmark usershare
+Comment=Create bookmark for usershare
+Exec=/usr/bin/bookmark-usershare
+Terminal=false
+Type=Application
+StartupNotify=false
+OnlyShowIn=GNOME;Unity;
+X-GNOME-Autostart-Phase=Initialization

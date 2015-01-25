@@ -1,0 +1,18 @@
+#!/bin/sh
+PATH="/usr/bin:$PATH"
+
+if [ ! -e ~/.config/gtk-3.0/bookmarks ]; then
+	xdg-user-dirs-update
+	xdg-user-dirs-gtk-update
+fi
+
+grep -q "^sftp.*netshare/users/$USER" "$HOME"/.config/gtk-3.0/bookmarks
+if [ "$?" -ne "0" ]; then
+	echo "sftp://$USER@fileserver/netshare/users/$USER $USER on fileserver" >> "$HOME"/.config/gtk-3.0/bookmarks
+fi
+
+grep -q "^sftp.*netshare/networld/usershare" "$HOME"/.config/gtk-3.0/bookmarks
+if [ "$?" -ne "0" ]; then
+	echo "sftp://$USER@fileserver/netshare/networld/usershare usershare on fileserver" >> "$HOME"/.config/gtk-3.0/bookmarks
+fi
+

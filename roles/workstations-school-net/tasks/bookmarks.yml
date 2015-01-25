@@ -1,0 +1,14 @@
+---
+# file: roles/workstations-school-standalone/tasks/bookmarks.yml
+
+- name: add script to create bookmarks
+  copy: src=bookmark-usershare dest=/usr/bin mode=0755
+  tags:
+   - install
+   - bookmarks
+
+- name: add autostart desktop file to start bookmark script
+  copy: src=bookmark-usershare.desktop dest=/etc/xdg/autostart
+  tags:
+   - install
+   - bookmarks
