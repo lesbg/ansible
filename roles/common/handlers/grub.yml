@@ -1,0 +1,14 @@
+---
+# file: roles/common/handlers/grub.yml
+
+- name: rebuild grub config
+  command: /bin/true
+  notify:
+   - rebuild grub2.cfg
+   - rebuild grub2-efi.cfg
+
+- name: rebuild grub2.cfg
+  command: removes=/etc/grub2.cfg grub2-mkconfig > /etc/grub2.cfg
+
+- name: rebuild grub2-efi.cfg
+  command: removes=/etc/grub2-efi.cfg grub2-mkconfig > /etc/grub2-efi.cfg

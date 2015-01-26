@@ -1,0 +1,26 @@
+---
+# file: roles/common/tasks/quirks.yml
+
+- name: set intel backlight xorg option
+  copy: src=backlight/20-intel.conf dest=/etc/X11/xorg.conf.d
+  when: (ansible_product_name == "X551MA" and ansible_system_vendor == "ASUSTeK COMPUTER INC.")
+  tags:
+   - install
+   - quirks
+
+- name: set intel backlight grub option
+  replace: dest=/etc/default/grub regexp="^(.*rhgb quiet).$" replace="\1 acpi_osi=\""
+  when: (ansible_product_name == "X551MA" and ansible_system_vendor == "ASUSTeK COMPUTER INC.")
+  notify:
+   - rebuild grub config
+  tags:
+   - install
+   - quirks
+
+- name: disable rc6
+  copy: src=modules/disable-rc6.conf dest=/etc/modprobe.d
+  when: (ansible_product_name == "X551MA" and ansible_system_vendor == "ASUSTeK COMPUTER INC.") and
+        (ansible_distribution == "Fedora" and ansible_distribution_major_version|int <= 21)
+  tags:
+   - install
+   - quirks
