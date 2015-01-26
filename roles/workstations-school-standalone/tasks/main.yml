@@ -7,5 +7,6 @@
 - include: bookmarks.yml
 - include: display-manager.yml
 - include: polkit.yml
+- include: demo.yml
 - include: ../../common/tasks/ipa.yml
 - include: ../../common/tasks/restorecon.yml

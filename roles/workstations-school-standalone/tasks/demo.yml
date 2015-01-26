@@ -1,0 +1,14 @@
+---
+# file: roles/workstations-school-standalone/tasks/demo.yml
+
+- name: remove demo-client share
+  file: name={{item}} state=absent
+  with_items:
+   - /usr/share/demo-client
+   - /usr/bin/demo-client
+   - /usr/share/applications/demo-client
+  notify:
+   - setup desktop files
+  tags:
+   - install
+   - demo
