@@ -16,3 +16,5 @@
 - include: bookmarks.yml
 - include: ../../common/tasks/ipa.yml
 - include: virt.yml
+- include: ../../common/tasks/restorecon.yml
+- include: ../../common/tasks/clean-logs.yml
