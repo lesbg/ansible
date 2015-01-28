@@ -9,7 +9,14 @@ scc251.local.lesbg.com
 [jcc]
 jcc[A:F][01:12].local.lesbg.com
 
+[kg-teachers]
+lkg-rainbow-laptop.local.lesbg.com
+lkg-sunshine-laptop.local.lesbg.com
+
 [workstations:children]
 src
 scc
 jcc
+
+[workstations-standalone:children]
+kg-teachers

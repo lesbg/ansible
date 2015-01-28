@@ -1,0 +1,6 @@
+---
+# file: workstations.yml
+ - hosts: workstations-standalone
+   remote_user: root
+   roles:
+    - workstations-school-standalone
