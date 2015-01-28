@@ -6,4 +6,5 @@
 - include: ntp.yml
 - include: profile.yml
 - include: no-rename-ifcfg.yml
+- include: grub.yml
 - include: quirks.yml
