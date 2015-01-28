@@ -75,3 +75,9 @@
   tags:
    - install
    - display-manager
+
+- name: install x11vnc
+  yum: name=x11vnc state=present
+  tags:
+   - install
+   - display-manager
