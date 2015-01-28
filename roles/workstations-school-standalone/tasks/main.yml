@@ -10,3 +10,4 @@
 - include: demo.yml
 - include: ../../common/tasks/ipa.yml
 - include: ../../common/tasks/restorecon.yml
+- include: ../../common/tasks/clean-logs.yml

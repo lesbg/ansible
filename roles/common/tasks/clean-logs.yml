@@ -1,0 +1,8 @@
+---
+# file: roles/common/tasks/clean-logs.yml
+
+- name: clean all log files
+  command: find /var/log -type f -delete
+  tags:
+   - install
+   - clean-logs
