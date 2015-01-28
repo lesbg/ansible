@@ -21,9 +21,26 @@
 
 - name: install demo-client desktop file
   copy: src=demo-client/demo.desktop dest=/usr/share/applications
+  when: ansible_hostname != "scc251"
   notify:
    - setup desktop files
   tags:
    - install
    - demo
 
+# For teacher station only
+- name: install x11vnc
+  yum: name=x11vnc state=present
+  when: ansible_hostname == "scc251"
+  tags:
+   - install
+   - demo
+
+- name: install demo server desktop files
+  copy: src=demo-server/{{item}} dest=/usr/share/applications
+  when: ansible_hostname == "scc251"
+  notify:
+   - setup desktop files
+  tags:
+   - install
+   - demo

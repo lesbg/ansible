@@ -1,0 +1,9 @@
+# KDE Config File
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Exec=x11vnc -nowf -noxdamage -nopw -forever -shared -rfbport 5999 -viewonly
+Icon=gnome-laptop
+Terminal=false
+Name=Start demonstration
+Categories=Network;

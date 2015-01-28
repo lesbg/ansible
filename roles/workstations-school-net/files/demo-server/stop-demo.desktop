@@ -1,0 +1,9 @@
+# KDE Config File
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Exec=killall x11vnc
+Icon=gnome-laptop
+Terminal=false
+Name=Stop demonstration
+Categories=Network;
