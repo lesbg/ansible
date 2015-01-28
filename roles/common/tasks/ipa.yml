@@ -27,3 +27,9 @@
   tags:
    - install
    - accounts
+
+- name: remove script location from fstab
+  mount: name=/mnt src=datastore02:/netshare/networld fstype=nfs state=absent
+  tags:
+   - install
+   - accounts
