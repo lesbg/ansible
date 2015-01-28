@@ -1,0 +1,18 @@
+---
+# file: roles/workstations-school/tasks/clear-recent-users.yml
+
+- name: get list of recent users
+  shell: ls -1 /var/lib/AccountsService/users/
+  register: contents
+  tags:
+   - install
+   - accounts
+
+- name: remove list of recent users
+  file: name=/var/lib/AccountsService/users/{{item}} state=absent
+  with_items: contents.stdout_lines
+  notify:
+   - restart accounts service
+  tags:
+   - install
+   - accounts

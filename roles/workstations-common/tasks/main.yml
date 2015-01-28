@@ -5,3 +5,4 @@
 - include: ../../common/tasks/rpmfusion.yml
 - include: packages.yml
 - include: libreoffice-arabic.yml
+- include: clear-recent-users.yml

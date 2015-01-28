@@ -1,0 +1,6 @@
+---
+# file: roles/common/handlers/accounts.yml
+- name: restart accounts service
+  service: name={{item}} enabled=yes state=restarted
+  with_items:
+   - accounts-daemon.service

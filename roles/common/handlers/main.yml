@@ -11,3 +11,4 @@
 - include: dconf.yml
 - include: desktop.yml
 - include: grub.yml
+- include: accounts.yml
