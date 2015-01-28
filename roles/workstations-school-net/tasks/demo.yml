@@ -38,6 +38,9 @@
 
 - name: install demo server desktop files
   copy: src=demo-server/{{item}} dest=/usr/share/applications
+  with_items:
+   - start-demo.desktop
+   - stop-demo.desktop
   when: ansible_hostname == "scc251"
   notify:
    - setup desktop files
