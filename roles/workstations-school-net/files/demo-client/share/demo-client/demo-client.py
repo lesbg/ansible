@@ -20,7 +20,7 @@ def vnc_disconnected(src):
 class appgui:
     def get_server(self):
         hostname = platform.node()
-        if hostname.lower().startswith("jcc")
+        if hostname.lower().startswith("jcc"):
             server = "jcc-teacher"
         else:
             server = "scc251"
