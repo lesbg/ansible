@@ -1,0 +1,11 @@
+---
+# file: roles/workstations-school-net/tasks/packagekit.yml
+
+- name: Disable packagekit
+  service: name={{item}} enabled=no
+  with_items:
+   - packagekit
+   - packagekit-offline-update
+  tags:
+   - install
+   - packagekit

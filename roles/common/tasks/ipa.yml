@@ -7,29 +7,29 @@
    - freeipa-client
    - freeipa-admintools
   tags:
-   - install
+   - setup
    - accounts
 
 - name: mount location to access script
   mount: name=/mnt src=datastore02:/netshare/networld fstype=nfs opts=nolock state=mounted
   tags:
-   - install
+   - setup
    - accounts
 
 - name: join LESB&G FreeIPA domain
   command: /mnt/hd_images/linux/f19/autojoin.sh
   tags:
-   - install
+   - setup
    - accounts
 
 - name: umount script location
   mount: name=/mnt src=datastore02:/netshare/networld fstype=nfs state=unmounted
   tags:
-   - install
+   - setup
    - accounts
 
 - name: remove script location from fstab
   mount: name=/mnt src=datastore02:/netshare/networld fstype=nfs state=absent
   tags:
-   - install
+   - setup
    - accounts

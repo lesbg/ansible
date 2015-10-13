@@ -1,0 +1,31 @@
+---
+# file: roles/workstation-common/tasks/cups.yml
+
+- name: be sure cups is installed
+  action: yum pkg=cups state=installed 
+  tags:
+   - install
+   - cups
+   - print
+ 
+- name: be sure cups and cups-browsed are enabled
+  service: name={{item}} enabled=yes
+  with_items:
+   - cups
+   - cups-browsed
+  tags:
+   - install
+   - cups
+   - print
+
+- name: be sure cups and cups-browsed are running
+  service: name={{item}} state=running
+  ignore_errors: yes 
+  with_items:
+   - cups
+   - cups-browsed
+  tags:
+   - install
+   - cups
+   - print
+

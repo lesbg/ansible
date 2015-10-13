@@ -12,6 +12,10 @@
    - clear yum cache
    - create empty yum cache
   when: ansible_distribution == "Fedora"
+  tags:
+   - install
+   - yum
+   - repo
 
 - name: turn off https links in fedora-updates yum repo
   lineinfile: dest=/etc/yum.repos.d/fedora-updates.repo
@@ -23,4 +27,7 @@
    - clear yum cache
    - create empty yum cache
   when: ansible_distribution == "Fedora"
-
+  tags:
+   - install
+   - yum
+   - repo

@@ -33,8 +33,15 @@
    - install
    - multiseat
 
-- name: be sure multiseat service is running and enabled
-  service: name=prepare-multiseat state=running enabled=yes
+- name: be sure multiseat service is enabled
+  service: name=prepare-multiseat enabled=yes
+  tags:
+   - install
+   - multiseat
+
+- name: be sure multiseat service is running
+  service: name=prepare-multiseat state=running
+  ignore_errors: yes 
   tags:
    - install
    - multiseat

@@ -5,14 +5,14 @@
   tags:
    - install
    - packages
-   - repos
+   - repo
 
 - name: clear cache cookies
   command: find /var/cache/yum -iname cachecookie -delete
   tags:
    - install
    - packages
-   - repos
+   - repo
 
 - name: install GNOME Desktop for < F21
   yum: name="@^gnome-desktop-environment"

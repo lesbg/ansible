@@ -11,3 +11,6 @@ frequency-refresh-cache=0
 frequency-updates-notification=0
 connection-use-mobile=false
 connection-use-wifi=false
+
+[org/gnome/software]
+download-updates=false

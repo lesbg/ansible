@@ -1,5 +1,42 @@
 ---
 # file: roles/workstations-school/tasks/virt.yml
+- name: Install VirtualBox with kmod
+  yum: name={{item}} state=present
+  with_items:
+   - VirtualBox
+   - kmod-VirtualBox
+  register: kmod_install
+  ignore_errors: True
+  tags:
+   - install
+   - virt
+
+- name: Install VirtualBox with akmods
+  yum: name={{item}} state=present
+  with_items:
+   - VirtualBox
+   - akmod-VirtualBox
+  when: kmod_install != 0
+  tags:
+   - install
+   - virt
+
+- name: Rebuild VirtualBox akmod
+  command: akmods --from-init
+  when: kmod_install != 0
+  tags:
+   - install
+   - virt
+
+- name: Install VirtualBox akmods
+  yum: name={{item}} state=present
+  with_items:
+   - akmod-VirtualBox
+  when: kmod_install == 0
+  tags:
+   - install
+   - virt
+
 - name: Make os_images directory
   file: dest=/usr/share/os_images state=directory mode=0755
   tags:
@@ -19,13 +56,13 @@
    - virt
 
 - name: Install VirtualBox hard drive
-  command: rsync -avHPx /networld/system_data/virt/virt.vdi /usr/share/os_images/
+  command: rsync -avHPx root@fileserver:/networld/system_data/virt/virt.vdi /usr/share/os_images/
   tags:
    - install
    - virt
 
 - name: Install VirtualBox hard drive snapshot
-  command: rsync -avHPx /networld/system_data/virt/{33bf5982-3a66-4da8-8526-771bdda82f37}.vdi /usr/share/os_images/.VirtualBox/Machines/Snapshots.orig/
+  command: rsync -avHPx root@fileserver:/networld/system_data/virt/{33bf5982-3a66-4da8-8526-771bdda82f37}.vdi /usr/share/os_images/.VirtualBox/Machines/Snapshots.orig/
   tags:
    - install
    - virt

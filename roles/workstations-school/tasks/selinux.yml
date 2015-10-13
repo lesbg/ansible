@@ -18,6 +18,7 @@
 
 - name: set selinux nfs home dirs boolean
   seboolean: name=use_nfs_home_dirs state=yes persistent=yes
+  ignore_errors: yes
   tags:
-   - install
+   - setup
    - selinux

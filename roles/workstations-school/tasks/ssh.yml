@@ -7,8 +7,15 @@
    - install
    - ssh
 
-- name: be sure sshd service is running and enabled
-  service: name=sshd state=running enabled=yes
+- name: be sure sshd service is enabled
+  service: name=sshd enabled=yes
+  tags:
+   - install
+   - ssh
+
+- name: be sure sshd service is running
+  service: name=sshd state=running
+  ignore_errors: yes 
   tags:
    - install
    - ssh

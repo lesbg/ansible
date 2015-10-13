@@ -8,6 +8,10 @@
   with_items:
    - rpmfusion-free
    - rpmfusion-nonfree 
+  tags:
+   - install
+   - rpmfusion
+   - repo
 
 - name: add skeleton rpmfusion repos to /etc/yum.repos.d
   copy: src={{item}}.repo dest=/etc/yum.repos.d/{{item}}-temp.repo mode=0644
@@ -15,18 +19,30 @@
    - rpmfusion-free
    - rpmfusion-nonfree
   when: rpmfusion_result|failed
+  tags:
+   - install
+   - rpmfusion
+   - repo
 
 - name: install rpmfusion-free-release
   yum: name=rpmfusion-free-release
        disable_gpg_check=yes
        state=present
   when: rpmfusion_result|failed
+  tags:
+   - install
+   - rpmfusion
+   - repo
 
 - name: install rpmfusion-nonfree-release
   yum: name=rpmfusion-nonfree-release
        disable_gpg_check=yes
        state=present
   when: rpmfusion_result|failed
+  tags:
+   - install
+   - rpmfusion
+   - repo
 
 - name: remove skeleton rpmfusion repos from /etc/yum.repos.d
   file: path=/etc/yum.repos.d/{{item}}-temp.repo
@@ -35,3 +51,7 @@
    - rpmfusion-free
    - rpmfusion-nonfree
   when: rpmfusion_result|failed
+  tags:
+   - install
+   - rpmfusion
+   - repo

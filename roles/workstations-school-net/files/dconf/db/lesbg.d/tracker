@@ -1,0 +1,4 @@
+[org/freedesktop/tracker/miner/files]
+throttle=20
+crawling-interval=-2
+index-recursive-directories=['']

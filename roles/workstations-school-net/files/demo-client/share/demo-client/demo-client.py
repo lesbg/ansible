@@ -1,5 +1,6 @@
 import sys
 import time
+import platform
 import gtkvnc
 import ConfigParser
 from optparse import OptionParser
@@ -17,6 +18,14 @@ def vnc_disconnected(src):
     gtk.main_quit()
 
 class appgui:
+    def get_server(self):
+        hostname = platform.node()
+        if hostname.lower().startswith("jcc")
+            server = "jcc-teacher"
+        else:
+            server = "scc251"
+        return server
+
     def __init__(self):
         gladefile="demo-client.glade"
         windowname="MainWindow"
@@ -27,7 +36,7 @@ class appgui:
                 "on_MenuFullScreen_activate" : (self.toggle_fs) }
         self.wTree.signal_autoconnect (dic)
         self.Layout = self.wTree.get_widget("Layout")
-        host = "scc251"
+        host = self.get_server()
         port = "5999"
         self.vnc = gtkvnc.Display()
         self.Layout.add(self.vnc)

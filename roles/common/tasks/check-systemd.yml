@@ -1,0 +1,12 @@
+---
+# file: roles/common/tasks/check-systemd.yml
+- name: check whether systemd is running (method 1)
+  command: systemctl status
+  ignore_errors: yes
+  register: systemd_not_working
+
+- name: check whether systemd is running (method 2)
+  command: systemctl status 2>&1 >/dev/null | grep "chroot"
+  ignore_errors: yes
+  register: systemd_not_working
+  when: systemd_not_working == 0

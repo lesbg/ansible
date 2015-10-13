@@ -3,8 +3,9 @@
 
 - name: set grub timeout to 1
   replace: dest=/etc/default/grub regexp="^(GRUB_TIMEOUT)=[0-9]*$" replace="\1=1"
+  ignore_errors: yes
   notify:
    - rebuild grub config
   tags:
-   - install
+   - setup
    - grub

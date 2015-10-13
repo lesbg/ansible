@@ -79,4 +79,14 @@
    - install
    - nfs
 
+- name: enable NFS units
+  service: name={{item}} enabled=yes
+  with_items:
+   - netshare-networld.automount
+   - netshare-users.automount
+   - bindfs-depts.service
+  tags:
+   - install
+   - nfs
+
 - meta: flush_handlers

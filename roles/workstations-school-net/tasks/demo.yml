@@ -21,7 +21,7 @@
 
 - name: install demo-client desktop file
   copy: src=demo-client/demo.desktop dest=/usr/share/applications
-  when: ansible_hostname != "scc251"
+  when: ansible_hostname != "scc251" and ansible_hostname != "jcc-teacher"
   notify:
    - setup desktop files
   tags:
@@ -31,7 +31,7 @@
 # For teacher station only
 - name: install x11vnc
   yum: name=x11vnc state=present
-  when: ansible_hostname == "scc251"
+  when: ansible_hostname == "scc251" or ansible_hostname == "jcc-teacher"
   tags:
    - install
    - demo
@@ -41,7 +41,7 @@
   with_items:
    - start-demo.desktop
    - stop-demo.desktop
-  when: ansible_hostname == "scc251"
+  when: ansible_hostname == "scc251" or ansible_hostname == "jcc-teacher"
   notify:
    - setup desktop files
   tags:

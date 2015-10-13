@@ -7,8 +7,16 @@
    - install
    - ident
 
-- name: be sure ident service is running and enabled
-  service: name=oidentd state=running enabled=yes
+- name: be sure ident service is enabled
+  service: name=oidentd enabled=yes
   tags:
    - install
    - ident
+
+- name: be sure ident service is running
+  service: name=oidentd state=running
+  ignore_errors: yes 
+  tags:
+   - install
+   - ident
+

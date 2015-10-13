@@ -2,5 +2,5 @@
 layouts=['us', 'ara\tqwerty_digits']
 
 [org/gnome/desktop/input-sources]
-sources=[('xkb', 'us'), ('xkb', 'ara+qwerty_digits')]
+sources=[('xkb', 'us'), ('xkb', 'ara+qwerty')]
 xkb-options=['terminate:ctrl_alt_bksp', 'compose:rwin', 'grp:shift_caps_toggle']
