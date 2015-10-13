@@ -5,14 +5,15 @@ srcc[01:02].local.lesbg.com
 [scc]
 scca[01:03].local.lesbg.com
 sccb[01:05].local.lesbg.com
-sccd[01:03].local.lesbg.com
+sccc[01:03].local.lesbg.com
 scc251.local.lesbg.com
 
 [jcc]
-jcca[01:06].local.lesbg.com
-jcca08.local.lesbg.com
-jcc[b:e][01:06].local.lesbg.com
-jccf[01:01].local.lesbg.com
+jcca[01:02].local.lesbg.com
+jccb[01:03].local.lesbg.com
+jccc[01:03].local.lesbg.com
+jccd[01:05].local.lesbg.com
+jcce[01:06].local.lesbg.com
 jcc-teacher.local.lesbg.com
 jch01.local.lesbg.com
 
@@ -29,5 +30,5 @@ scc
 jcc
 ssr
 
-[ws-school-standalone:children]
-kg-teachers
+#[ws-school-standalone:children]
+#kg-teachers
