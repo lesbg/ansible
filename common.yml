@@ -1,6 +1,6 @@
 ---
 # file: workstations.yml
- - hosts: workstations
+ - hosts: all
    remote_user: root
    roles:
-    - workstations-school-net
+    - common

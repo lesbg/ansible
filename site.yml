@@ -1,3 +1,4 @@
 ---
 # file: site.yml
-include workstations.yml
+- include: ws-school-standalone.yml
+- include: ws-school-net.yml

@@ -1,0 +1,6 @@
+---
+# file: ws.yml
+ - hosts: ws-school-net
+   remote_user: root
+   roles:
+    - workstations-school-net
