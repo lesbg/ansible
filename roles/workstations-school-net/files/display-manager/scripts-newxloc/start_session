@@ -16,13 +16,13 @@ if [ ! -d "$HOME_DIR" ] && [ "$USER" != "student" ]; then
 	chmod 700 "$HOME_DIR"
 fi
 
-if [ "$USER" == "student" ]; then
-	if [ -d /usr/share/student ]; then
-		rsync -avHPx --delete /usr/share/student /tmp
-		chown student /tmp/student -R
-	else
-		mkdir -p /tmp/student
+for uname in student student1 student2 student3 student4; do
+	if [ "$USER" == "$uname" ]; then
+		mkdir -p /tmp/$uname
+		if [ -d /usr/share/student ]; then
+			rsync -avHPx --delete /usr/share/student/ /tmp/$uname
+			chown $uname.$uname /tmp/$uname -R
+		fi
+		chmod 700 /tmp/$uname
 	fi
-	chmod 700 /tmp/student
-fi
-exit 0
+done
