@@ -5,7 +5,10 @@
 # - xscreensaver can't access nfs folder under lightdm user, but denials aren't logged
 
 - name: install required modules
-  yum: name=libsemanage-python state=present
+  yum: name={{item}} state=present
+  with_items:
+   - libsemanage-python
+   - libselinux-python
   tags:
    - install
    - selinux
