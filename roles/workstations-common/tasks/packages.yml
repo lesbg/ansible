@@ -7,8 +7,38 @@
    - packages
    - repo
 
+- name: install python-dnf
+  yum: name="python-dnf"
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 22
+  tags:
+   - install
+   - packages
+   - repo
+   - languages
+   - fonts
+
+- name: set package manager to yum
+  set_fact: yum="yum"
+  when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int < 22
+  tags:
+   - install
+   - packages
+   - repo
+   - languages
+   - fonts
+
+- name: set package manager to dnf
+  set_fact: yum="dnf"
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 22
+  tags:
+   - install
+   - packages
+   - repo
+   - languages
+   - fonts
+
 - name: clear cache cookies
-  command: find /var/cache/yum -iname cachecookie -delete
+  command: find "/var/cache/{{ yum }}" -iname cachecookie -delete
   tags:
    - install
    - packages
@@ -16,41 +46,42 @@
 
 - name: install GNOME Desktop for < F21
   yum: name="@^gnome-desktop-environment"
-  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int < 21
+  when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int < 21
   tags:
    - install
    - packages
 
 - name: install GNOME Desktop for >= F21
-  yum: name="@^workstation-product-environment"
+  command: "{{yum}} -y groupinstall workstation-product-environment"
   when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 21
   tags:
    - install
    - packages
 
-- name: install langpack support
+- name: install yum langpack support
   yum: name="yum-langpacks"
+  when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int < 22
   tags:
    - install
    - packages
    - languages
 
-- name: install Arabic support
-  command: yum -y langinstall "ar_LB"
+- name: install dnf langinstall support
+  dnf: name="dnf-command(langinstall)"
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 22
   tags:
    - install
    - packages
    - languages
 
-- name: install Armenian support
-  command: yum -y langinstall "hy"
-  tags:
-   - install
-   - packages
-   - languages
-
-- name: install French support
-  command: yum -y langinstall "fr_FR"
+- name: install multiple language support
+  command: "{{yum}} -y langinstall {{item}}"
+  with_items:
+   - "en_US"
+   - "en_GB"
+   - "ar_LB"
+   - "fr_FR"
+   - "hy"
   tags:
    - install
    - packages
@@ -64,21 +95,22 @@
    - libreoffice
 
 - name: prepare to install Fonts
-  command: yum -y group mark remove fonts
+  command: "{{yum}} -y group mark remove fonts"
   tags:
    - install
    - packages
    - fonts
+  ignore_errors: yes
 
 - name: install Fonts
-  command: yum -y --exclude=larabie-uncommon-fonts --setopt="group_package_types=optional,default,mandatory" group install Fonts
+  command: "{{yum}} -y --exclude=larabie-uncommon-fonts --setopt=\"group_package_types=optional,default,mandatory\" group install Fonts"
   tags:
    - install
    - packages
    - fonts
 
 - name: cleanup after installing Fonts
-  command: yum -y group mark install fonts
+  command: "{{yum}} -y group mark install fonts"
   tags:
    - install
    - packages
@@ -90,8 +122,16 @@
    - install
    - bzflag
 
-- name: install dependencies for BZFlag compilation
+- name: install dependencies for BZFlag compilation for < F22
   command: yum-builddep -y /tmp/bzflag.src.rpm
+  when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int < 22
+  tags:
+   - install
+   - bzflag
+
+- name: install dependencies for BZFlag compilation for >= F22
+  command: dnf builddep -y /tmp/bzflag.src.rpm
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 22
   tags:
    - install
    - bzflag
