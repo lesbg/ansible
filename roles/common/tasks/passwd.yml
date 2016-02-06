@@ -1,0 +1,11 @@
+- name: create directory for VNC password
+  file: dest=/root/.vnc state=directory mode=0700
+  tags:
+   - install
+   - passwd
+
+- name: setup VNC password
+  copy: src=passwd/default.vnc dest=/root/.vnc/passwd mode=0600
+  tags:
+   - install
+   - passwd
