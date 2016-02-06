@@ -29,14 +29,30 @@
    - install
    - display-manager
 
-- name: copy school theme files for LightDM
-  copy: src=display-manager/lightdm-kde/lesbg dest=/usr/share/kde4/apps/lightdm-kde-greeter/themes/
+- name: copy school theme files for LightDM for < F23
+  copy: src=display-manager/lightdm-kde-1/lesbg dest=/usr/share/kde4/apps/lightdm-kde-greeter/themes/
+  when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int < 23
   tags:
    - install
    - display-manager
 
-- name: copy school config files for LightDM
-  copy: src=display-manager/conf/ dest=/etc/lightdm/
+- name: copy school theme files for LightDM for >= F23
+  copy: src=display-manager/lightdm-kde-2/lesbg dest=/usr/share/kde4/apps/lightdm-kde-greeter/themes/
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 23
+  tags:
+   - install
+   - display-manager
+
+- name: copy school config files for LightDM on < F23
+  copy: src=display-manager/conf/1/ dest=/etc/lightdm/
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int < 23
+  tags:
+   - install
+   - display-manager
+
+- name: copy school config files for LightDM on >= F23
+  copy: src=display-manager/conf/2/ dest=/etc/lightdm/
+  when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int >= 23
   tags:
    - install
    - display-manager
