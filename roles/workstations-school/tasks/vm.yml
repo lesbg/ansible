@@ -1,0 +1,22 @@
+---
+# file: roles/workstations-school/tasks/vm.yml
+
+- name: Install iptables samba port forwarding rule
+  copy: src=iptables dest=/etc/sysconfig
+  tags:
+   - install
+   - vm
+
+- name: be sure iptables service is enabled
+  service: name=iptables enabled=yes
+  tags:
+   - install
+   - vm
+
+- name: be sure iptables service is running
+  service: name=iptables state=running
+  ignore_errors: yes 
+  tags:
+   - install
+   - vm
+

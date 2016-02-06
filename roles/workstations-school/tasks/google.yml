@@ -1,0 +1,30 @@
+---
+# file: roles/workstations-school/tasks/google.yml
+
+- name: remove Google Chrome repo from system
+  file: name=/etc/yum.repos.d/google-chrome.repo state=absent
+  tags:
+   - install
+   - google
+   - chrome
+
+- name: disable Google Chrome automatic repo updates
+  copy: src=google-chrome-default dest=/etc/default/google-chrome mode=0644
+  tags:
+   - install
+   - google
+   - chrome
+
+- name: remove Google Earth repo from system
+  file: name=/etc/yum.repos.d/google-earth.repo state=absent
+  tags:
+   - install
+   - google
+   - google-earth
+
+- name: disable Google Earth automatic repo updates
+  copy: src=google-earth-default dest=/etc/default/google-earth mode=0644
+  tags:
+   - install
+   - google
+   - google-earth

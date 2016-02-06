@@ -3,10 +3,11 @@
 - include: ../../workstations-common/tasks/main.yml
 
 - include: ../../common/tasks/disable-firewalld.yml
-
 - include: ssh.yml
 - include: logos.yml
 - include: dconf.yml
 - include: polkit.yml
+- include: google.yml
 - include: selinux.yml
 - include: student-skel.yml
+- include: vm.yml
