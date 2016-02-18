@@ -1,0 +1,11 @@
+---
+# file: roles/workstations-school-net/tasks/abrt.yml
+
+- name: Remove ABRT gui
+  yum: name={{item}} state=absent
+  with_items:
+   - abrt-gui
+   - gnome-abrt
+  tags:
+   - install
+   - abrt

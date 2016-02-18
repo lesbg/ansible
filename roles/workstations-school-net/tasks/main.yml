@@ -15,5 +15,7 @@
 - include: power-button.yml
 - include: bookmarks.yml
 - include: packagekit.yml
+- include: abrt.yml
+- include: selinux.yml
 - include: ../../common/tasks/ipa.yml
 - include: virt.yml

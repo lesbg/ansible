@@ -1,0 +1,10 @@
+---
+# file: roles/workstations-school-net/tasks/selinux.yml
+
+- name: Remove setroubleshoot gui
+  yum: name={{item}} state=absent
+  with_items:
+   - setroubleshoot
+  tags:
+   - install
+   - selinux
