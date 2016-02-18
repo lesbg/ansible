@@ -1,4 +1,10 @@
 [org/freedesktop/tracker/miner/files]
 throttle=20
 crawling-interval=-2
-index-recursive-directories=['']
+index-recursive-directories=@as []
+enable-monitors=false
+sched-idle='always'
+index-single-directories=@as []
+
+[org/freedesktop/tracker/miner/extract]
+sched-idle='always'
