@@ -1,10 +1,1 @@
-/org/gnome/packagekit/enable-codec-helper
-/org/gnome/packagekit/enable-font-helper
-/org/gnome/packagekit/enable-mime-type-helper
-/org/gnome/settings-daemon/plugins/updates/active
-/org/gnome/settings-daemon/plugins/updates/connection-use-mobile
-/org/gnome/settings-daemon/plugins/updates/connection-use-wifi
-/org/gnome/settings-daemon/plugins/updates/frequency-get-updates
-/org/gnome/settings-daemon/plugins/updates/frequency-get-upgrades
-/org/gnome/settings-daemon/plugins/updates/frequency-refresh-cache
-/org/gnome/settings-daemon/plugins/updates/frequency-updates-notification
+/org/gnome/software/download-updates

@@ -9,3 +9,27 @@
   tags:
    - install
    - packagekit
+
+- name: Remove gnome-software
+  yum: name=gnome-software state=absent
+  tags:
+   - install
+   - packagekit
+
+- name: Add packages that get automatically removed when gnome-software is removed
+  yum: name={{item}} state=present
+  with_items:
+   - shim
+   - PackageKit
+  tags:
+   - install
+   - packagekit
+
+- name: Add extra F23+ packages
+  yum: name={{item}} state=present
+  when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int >= 23
+  with_items:
+   - fwupd
+  tags:
+   - install
+   - packagekit
