@@ -18,8 +18,8 @@ prefsCommand:	xscreensaver-demo -prefs
 nice:		10
 memoryLimit:	0
 fade:		True
-unfade:		False
-fadeSeconds:	0:00:03
+unfade:		True
+fadeSeconds:	0:00:01
 fadeTicks:	20
 captureStderr:	False
 ignoreUninstalledPrograms:True
@@ -215,7 +215,7 @@ programs:								      \
 - GL: 				antmaze -root				    \n\
   GL: 				boing -root				    \n\
 				boxfit -root				    \n\
-  GL: 				carousel -root -count 5 -no-titles -no-zoom \n\
+  GL: 				carousel -count 5 -root -no-titles -no-zoom \n\
 				celtic -root				    \n\
   GL: 				crackberg -root				    \n\
   GL: 				cube21 -root				    \n\
@@ -254,4 +254,4 @@ procInterrupts:	True
 xinputExtensionDev: True
 overlayStderr:	True
 
-imageDirectory: /usr/share/backgrounds
+imageDirectory: /netshare/networld/background_pics
