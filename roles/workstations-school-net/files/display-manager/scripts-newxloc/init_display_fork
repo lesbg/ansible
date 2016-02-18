@@ -34,7 +34,7 @@ fi
 USE_PICS=$(printf '%q' $USE_PICS)
 grep $USE_PICS /var/lib/lightdm/.xscreensaver
 if [ "$?" -ne "0" ]; then
-	sed s\!"imageDirectory:.*$"\!"imageDirectory: $USE_PICS"\! /var/lib/lightdm/xscreensaver > /var/lib/lightdm/.xscreensaver
+	sed s\!"imageDirectory:.*$"\!"imageDirectory: $USE_PICS"\! /var/lib/lightdm/.xscreensaver > /var/lib/lightdm/.xscreensaver
 fi
 
 mkdir -p /var/run/lightdm/lightdm

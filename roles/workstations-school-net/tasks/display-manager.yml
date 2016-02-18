@@ -72,7 +72,7 @@
   when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 21
 
 - name: copy screensaver config
-  copy: src=display-manager/xscreensaver dest=/var/lib/lightdm
+  copy: src=display-manager/xscreensaver dest=/var/lib/lightdm/.xscreensaver
   tags:
    - install
    - display-manager
