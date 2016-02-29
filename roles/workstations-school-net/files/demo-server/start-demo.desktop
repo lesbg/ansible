@@ -2,7 +2,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Type=Application
-Exec=x11vnc -nowf -noxdamage -nopw -forever -shared -rfbport 5999 -viewonly
+Exec=x11vnc -nowf -nopw -forever -shared -rfbport 5999 -nocursorshape -viewonly
 Icon=gnome-laptop
 Terminal=false
 Name=Start demonstration
