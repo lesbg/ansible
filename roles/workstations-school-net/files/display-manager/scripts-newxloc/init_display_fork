@@ -35,6 +35,9 @@ fi
 
 mkdir -p /var/lib/lightdm/display-${DNUM}
 echo "xscreensaver.imageDirectory: $USE_PICS" > /var/lib/lightdm/display-${DNUM}/.Xdefaults
+if [ `date "+%Y-%m-%d"` == "2016-04-01" ]; then
+	echo "xscreensaver.selected: 50" >> /var/lib/lightdm/display-${DNUM}/.Xdefaults
+fi
 
 chown lightdm.lightdm -R /var/lib/lightdm/display-${DNUM}
 chmod 700 /var/lib/lightdm/display-${DNUM}

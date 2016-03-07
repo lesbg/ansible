@@ -88,6 +88,7 @@
   with_items:
    - xscreensaver-gl-extras
    - xscreensaver-gl-base
+   - xscreensaver-extras
   tags:
    - install
    - display-manager

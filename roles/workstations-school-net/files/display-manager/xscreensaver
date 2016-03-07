@@ -93,7 +93,11 @@ programs:								      \
 				xjack -root				    \n\
 				xlyap -root				    \n\
   GL: 				atlantis -root				    \n\
--				bsod -root				    \n\
+-				bsod -root -no-amiga -no-glados -no-os2	      \
+				  -no-os390 -no-vms -no-hvx		      \
+				  -no-blitdamage -no-atm -no-linux	      \
+				  -no-hppalinux -no-solaris -no-sco	      \
+				  -no-hpux -no-tru64                        \n\
   GL: 				bubble3d -root				    \n\
   GL: 				cage -root				    \n\
 -				crystal -root				    \n\
