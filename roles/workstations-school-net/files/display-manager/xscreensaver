@@ -254,4 +254,4 @@ procInterrupts:	True
 xinputExtensionDev: True
 overlayStderr:	True
 
-imageDirectory: /netshare/networld/background_pics
+imageDirectory: /usr/share/backgrounds/images
