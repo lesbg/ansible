@@ -20,7 +20,9 @@ DNUM=`echo $DISPLAY | sed 's/://g'`
 ps ax | grep x11vnc | grep -q 590$DNUM
 if [ "$?" -eq 0 ]; then
 	PIDS=`ps ax | grep x11vnc | grep 590$DNUM | awk '{ print $1 }'`
-	kill -9 $PID
+	for PID in $PIDS; do
+		kill -9 $PID
+	done
 fi
 x11vnc -rfbauth /root/.vnc/passwd -rfbport 590$DNUM -rfbportv6 590$DNUM -display ${DISPLAY} -forever -shared -auth "$LIGHTDM_XAUTH" -xrandr -loop -o /var/log/vnc-${DNUM}.log 2>/dev/null &
 
