@@ -1,35 +1,75 @@
 ---
 # file: roles/workstations-school/tasks/ipa.yml
 
-- name: install FreeIPA client
+- name: install FreeIPA client on Fedora
   yum: name={{item}} state=present
   with_items:
    - freeipa-client
    - freeipa-admintools
+  when: ansible_distribution == "Fedora"
   tags:
    - setup
    - accounts
+   - ipa
+
+- name: install FreeIPA client on CentOS
+  yum: name={{item}} state=present
+  with_items:
+   - ipa-client
+   - ipa-admintools
+  when: ansible_distribution == "CentOS"
+  tags:
+   - setup
+   - accounts
+   - ipa
+
+- name: install lizardfs-client
+  yum: name=lizardfs-client state=installed
+  tags:
+   - setup
+   - accounts
+   - ipa
+
+- name: install LizardFS IPA config file
+  copy: src=mfsmount-netshare.cfg dest=/var/tmp/ mode=0600
+  tags:
+   - setup
+   - accounts
+   - ipa
+
+- name: create LizardFS IPA mount point
+  file: path=/tmp/autojoin
+        state=directory
+        mode=0755
+  tags:
+   - setup
+   - accounts
+   - ipa
 
 - name: mount location to access script
-  mount: name=/mnt src=datastore02:/netshare/networld fstype=nfs opts=nolock state=mounted
+  command: mfsmount -c /var/tmp/mfsmount-netshare.cfg /tmp/autojoin
   tags:
    - setup
    - accounts
+   - ipa
 
 - name: join LESB&G FreeIPA domain
-  command: /mnt/hd_images/linux/f19/autojoin.sh
+  command: /tmp/autojoin/networld/hd_images/linux/f23/autojoin.sh
   tags:
    - setup
    - accounts
+   - ipa
 
 - name: umount script location
-  mount: name=/mnt src=datastore02:/netshare/networld fstype=nfs state=unmounted
+  command: umount /tmp/autojoin
   tags:
    - setup
    - accounts
+   - ipa
 
-- name: remove script location from fstab
-  mount: name=/mnt src=datastore02:/netshare/networld fstype=nfs state=absent
+- name: remove LizardFS IPA config file
+  file: name=/var/tmp/mfsmount-netshare.cfg state=absent
   tags:
    - setup
    - accounts
+   - ipa

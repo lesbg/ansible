@@ -1,7 +1,7 @@
 [Unit]
 Description=Create bindfs mount point for /netshare/networld/usershare/depts
-Requires=netshare-networld.mount
-After=netshare-networld.mount
+Requires=netshare-mount.service netshare-ready.service
+After=netshare-mount.service netshare-ready.service
 
 [Service]
 Type=oneshot

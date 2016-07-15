@@ -3,7 +3,7 @@
 
 - include: ../../workstations-school/tasks/main.yml
 
-- include: ../../common/tasks/nfs.yml
+- include: ../../common/tasks/lizardfs.yml
 
 - include: ident.yml
 - include: multiseat.yml

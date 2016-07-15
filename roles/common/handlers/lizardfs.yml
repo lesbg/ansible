@@ -1,0 +1,16 @@
+---
+# file: roles/common/handlers/lizardfs.yml
+
+- name: start LizardFS units
+  service: name={{item}} state=started
+  ignore_errors: yes 
+  with_items:
+   - netshare-mount.service
+   - snapshots-mount.service
+   - bindfs-depts.service
+
+- name: stop LizardFS units
+  service: name={{item}} state=stopped
+  with_items:
+   - netshare-mount.service
+   - bindfs-depts.service

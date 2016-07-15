@@ -1,0 +1,133 @@
+---
+# file: roles/common/tasks/lizardfs.yml
+
+- name: create LizardFS mount point
+  file: path=/netshare
+        state=directory
+        mode=0755
+  tags:
+   - install
+   - nfs
+   - lizardfs
+
+- name: check LizardFS snapshots mount point
+  stat: path=/snapshots
+  register: p
+  tags:
+   - install
+   - nfs
+   - lizardfs
+
+- name: create LizardFS snapshots mount point
+  file: path=/snapshots
+        state=directory
+        mode=0755
+  when: not p.stat.isdir is defined or not p.stat.isdir
+  tags:
+   - install
+   - nfs
+   - lizardfs
+
+- name: check whether system home dir is a symlink
+  stat: path=/home follow=no
+  register: home_path
+  tags:
+   - install
+   - nfs
+   - lizardfs
+
+- name: backup system home dir
+  shell: removes=/home mv /home /home-`date -Iseconds`.bak
+  when: home_path.stat.islnk is defined and home_path.stat.islnk == False
+  tags:
+   - install
+   - nfs
+   - lizardfs
+
+- name: create symlink from /home to /netshare/users
+  file: path=/home state=link src=/netshare/users force=yes
+  when: home_path.stat.islnk is not defined or home_path.stat.islnk == False
+  tags:
+   - install
+   - nfs
+   - lizardfs
+
+- name: check whether networld is a symlink
+  stat: path=/networld follow=no
+  register: home_path
+  tags:
+   - install
+   - nfs
+   - lizardfs
+
+- name: backup networld dir
+  shell: removes=/networld mv /networld /networld-`date -Iseconds`.bak
+  when: home_path.stat.islnk is defined and home_path.stat.islnk == False
+  tags:
+   - install
+   - nfs
+   - lizardfs
+
+- name: create symlink from /networld to /netshare/networld
+  file: path=/networld state=link src=/netshare/networld force=yes
+  when: home_path.stat.islnk is not defined or home_path.stat.islnk == False
+  tags:
+   - install
+   - nfs
+   - lizardfs
+
+- name: install bindfs and lizardfs-client
+  yum: name={{item}} state=installed
+  with_items:
+   - bindfs
+   - lizardfs-client
+  tags:
+   - install
+   - nfs
+   - lizardfs
+
+- name: install LizardFS config files
+  copy: src={{item}} dest=/etc/mfs/{{item}} mode=0600
+  with_items:
+   - mfsmount-netshare.cfg
+   - mfsmount-snapshots.cfg
+  tags:
+   - install
+   - nfs
+   - lizardfs
+
+- name: setup LizardFS units
+  copy: src={{item}} dest=/etc/systemd/system/{{item}} mode=0644
+  with_items:
+   - netshare-mount.service
+   - snapshots-mount.service 
+   - netshare-ready.service
+   - bindfs-depts.service
+  notify:
+   - start LizardFS units
+  tags:
+   - install
+   - nfs
+   - lizardfs
+
+- name: install LizardFS helper scripts
+  copy: src={{item}} dest=/srv/{{item}} mode=0755
+  with_items:
+   - check-netshare-ready.sh
+  tags:
+   - install
+   - nfs
+   - lizardfs
+
+- name: enable LizardFS units
+  service: name={{item}} enabled=yes
+  with_items:
+   - netshare-mount.service
+   - snapshots-mount.service
+   - bindfs-depts.service
+  tags:
+   - install
+   - nfs
+   - lizardfs
+
+- meta: flush_handlers
