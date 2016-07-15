@@ -1,5 +1,6 @@
 [sad]
-sad[01:03].local.lesbg.com
+sad01.local.lesbg.com
+sad[03:04].local.lesbg.com
 
 [src]
 srca[01:04].local.lesbg.com
@@ -29,6 +30,14 @@ jch01.local.lesbg.com
 [ssr]
 ssr[01:04].local.lesbg.com
 
+[misc]
+isr01.local.lesbg.com
+rony-office-01.local.lesbg.com
+
+[acc]
+acc01.local.lesbg.com
+acc02.local.lesbg.com
+
 [kg-teachers]
 lkg-rainbow-laptop.local.lesbg.com
 lkg-sunshine-laptop.local.lesbg.com
@@ -42,6 +51,8 @@ ssr
 smisc
 jcc
 jad
+misc
+acc
 
 #[ws-school-standalone:children]
 #kg-teachers
