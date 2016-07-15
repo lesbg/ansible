@@ -3,6 +3,7 @@
 - include: ../../workstations-common/tasks/main.yml
 
 - include: ../../common/tasks/disable-firewalld.yml
+- include: ../../common/tasks/grub.yml
 - include: ssh.yml
 - include: logos.yml
 - include: dconf.yml
