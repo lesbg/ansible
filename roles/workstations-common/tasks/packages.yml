@@ -37,6 +37,16 @@
    - languages
    - fonts
 
+- name: set strict mode to False
+  ini_file: dest=/etc/dnf/dnf.conf section=main option=strict value=False
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 23
+  tags:
+   - install
+   - packages
+   - repo
+   - languages
+   - fonts
+
 - name: clear cache cookies
   command: find "/var/cache/{{ yum }}" -iname cachecookie -delete
   tags:
@@ -135,3 +145,16 @@
   tags:
    - install
    - bzflag
+
+- name: install EFI bootloader utils
+  yum: name={{item}}
+  with_items:
+   - grub2-efi
+   - grub2
+   - efibootmgr
+   - efivar
+   - gnu-efi
+   - gnu-efi-utils
+  tags:
+   - install
+   - bootloader
