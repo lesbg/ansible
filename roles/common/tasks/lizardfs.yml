@@ -97,7 +97,7 @@
    - lizardfs
 
 - name: setup LizardFS units
-  copy: src={{item}} dest=/etc/systemd/system/{{item}} mode=0644
+  copy: src=lesbg/{{item}} dest=/etc/systemd/system/{{item}} mode=0644
   with_items:
    - netshare-mount.service
    - snapshots-mount.service 
@@ -111,7 +111,7 @@
    - lizardfs
 
 - name: install LizardFS helper scripts
-  copy: src={{item}} dest=/srv/{{item}} mode=0755
+  copy: src=lesbg/{{item}} dest=/srv/{{item}} mode=0755
   with_items:
    - check-netshare-ready.sh
   tags:

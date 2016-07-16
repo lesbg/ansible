@@ -6,9 +6,20 @@
         mode=0755
   with_items:
    - networld
-   - users
   notify:
    - start NFS units
+  tags:
+   - install
+   - nfs
+
+- name: create symlink to users
+  file: /netshare/users state=link src=/netshare/networld/usershare/users
+  tags:
+   - install
+   - nfs
+
+- name: create symlink to system_data
+  file: /netshare/system_data state=link src=/netshare/networld/system_data
   tags:
    - install
    - nfs
@@ -55,6 +66,12 @@
    - install
    - nfs
 
+- name: setup bindfs path
+  file: path=/var/tmp/bindfs state=directory mode=0755
+  tags:
+   - install
+   - nfs
+
 - name: install bindfs, nfs-utils and rpcbind
   yum: name={{item}} state=installed
   with_items:
@@ -66,13 +83,11 @@
    - nfs
 
 - name: setup NFS units
-  copy: src={{item}} dest=/usr/lib/systemd/system/{{item}} mode=0644
+  copy: src=lest/{{item}} dest=/etc/systemd/system/{{item}} mode=0644
   with_items:
    - netshare-networld.automount
    - netshare-networld.mount
-   - netshare-users.automount
-   - netshare-users.mount
-   - bindfs-depts.service
+   - bindfs-world.service
   notify:
    - start NFS units
   tags:
@@ -83,8 +98,7 @@
   service: name={{item}} enabled=yes
   with_items:
    - netshare-networld.automount
-   - netshare-users.automount
-   - bindfs-depts.service
+   - bindfs-world.service
   tags:
    - install
    - nfs

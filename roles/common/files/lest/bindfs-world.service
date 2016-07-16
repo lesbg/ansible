@@ -1,0 +1,15 @@
+[Unit]
+Description=Create bindfs mount point for /netshare/networld/usershare/world
+Requires=netshare-networld.mount
+After=netshare-networld.mount
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/mkdir -p /var/tmp/bindfs/world
+ExecStart=/usr/bin/chmod 700 /var/tmp/bindfs
+ExecStart=/usr/bin/mount --bind /netshare/networld/usershare/.data/world /var/tmp/bindfs/world
+ExecStart=/usr/bin/mount --make-private /var/tmp/bindfs/world
+ExecStart=/usr/bin/bindfs -o nonempty -p g=rwX,u=rwX --chgrp-ignore /var/tmp/bindfs/world /netshare/networld/usershare/.data/world
+ExecStop=/usr/bin/umount -f /netshare/networld/usershare/.data/world
+ExecStop=/usr/bin/umount -f /var/tmp/bindfs/world
