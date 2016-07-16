@@ -13,13 +13,13 @@
    - nfs
 
 - name: create symlink to users
-  file: /netshare/users state=link src=/netshare/networld/usershare/users
+  file: path=/netshare/users state=link src=/netshare/networld/usershare/users
   tags:
    - install
    - nfs
 
 - name: create symlink to system_data
-  file: /netshare/system_data state=link src=/netshare/networld/system_data
+  file: path=/netshare/system_data state=link src=/netshare/networld/system_data
   tags:
    - install
    - nfs
