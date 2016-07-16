@@ -1,8 +1,16 @@
 ---
 # file: roles/workstations-school-standalone/tasks/wifi.yml
 
-- name: autoconnect to lesbg wifi hotspots
-  copy: src=network-scripts/ dest=/etc/sysconfig/network-scripts
+- name: autoconnect to {{ branch }} wifi hotspots
+  copy: src=network-scripts/{{ branch }}/ifcfg/ dest=/etc/sysconfig/network-scripts mode=0644
   tags:
    - install
    - network
+  ignore_errors: true
+
+- name: copy wifi keys
+  copy: src=network-scripts/{{ branch }}/keys/ dest=/etc/sysconfig/network-scripts mode=0600
+  tags:
+   - install
+   - network
+  ignore_errors: true
