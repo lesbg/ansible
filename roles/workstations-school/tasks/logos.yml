@@ -2,14 +2,14 @@
 # file: roles/workstations-school/tasks/logos.yml
 
 - name: copy school logos across for < F23
-  copy: src=logos/1/ dest=/usr/share/pixmaps/
+  copy: src=logos/{{ branch }}/1/ dest=/usr/share/pixmaps/
   when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int < 23
   tags:
    - install
    - logos
 
 - name: copy school logos across for >= F23
-  copy: src=logos/2/ dest=/usr/share/pixmaps/
+  copy: src=logos/{{ branch }}/2/ dest=/usr/share/pixmaps/
   when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int >= 23
   tags:
    - install
