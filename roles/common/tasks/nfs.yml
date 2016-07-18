@@ -13,13 +13,13 @@
    - nfs
 
 - name: create symlink to users
-  file: path=/netshare/users state=link src=/netshare/networld/usershare/users
+  file: path=/netshare/users state=link src=/netshare/networld/usershare/users force=yes
   tags:
    - install
    - nfs
 
 - name: create symlink to system_data
-  file: path=/netshare/system_data state=link src=/netshare/networld/system_data
+  file: path=/netshare/system_data state=link src=/netshare/networld/system_data force=yes
   tags:
    - install
    - nfs
@@ -39,7 +39,7 @@
    - nfs
 
 - name: create symlink from /home to /netshare/users
-  file: path=/home state=link src=/netshare/users
+  file: path=/home state=link src=/netshare/users force=yes
   when: home_path.stat.islnk is not defined or home_path.stat.islnk == False
   tags:
    - install
