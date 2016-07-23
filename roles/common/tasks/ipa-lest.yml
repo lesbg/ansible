@@ -1,0 +1,42 @@
+---
+# file: roles/workstations-school/tasks/ipa-lest.yml
+
+- name: install nfs-utils and rpcbind
+  yum: name={{item}} state=installed
+  with_items:
+   - rpcbind
+   - nfs-utils
+  tags:
+   - install
+   - accounts
+   - ipa
+
+- name: create LizardFS IPA mount point
+  file: path=/tmp/autojoin
+        state=directory
+        mode=0755
+  tags:
+   - setup
+   - accounts
+   - ipa
+
+- name: mount location to access script
+  command: mount -t nfs -o defaults,async,acl,nolock,nfsvers=3 usershare:/mnt/networld/data /tmp/autojoin
+  tags:
+   - setup
+   - accounts
+   - ipa
+
+- name: join LESB&G FreeIPA domain
+  command: /tmp/autojoin/hd_images/linux/f23/autojoin.sh
+  tags:
+   - setup
+   - accounts
+   - ipa
+
+- name: umount script location
+  command: umount /tmp/autojoin
+  tags:
+   - setup
+   - accounts
+   - ipa
