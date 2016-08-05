@@ -2,7 +2,7 @@
 # file: roles/workstations-school/tasks/ipa.yml
 
 - name: install FreeIPA client on Fedora
-  yum: name={{item}} state=present
+  yum: name={{ item }} state=present
   with_items:
    - freeipa-client
    - freeipa-admintools
@@ -13,7 +13,7 @@
    - ipa
 
 - name: install FreeIPA client on CentOS
-  yum: name={{item}} state=present
+  yum: name={{ item }} state=present
   with_items:
    - ipa-client
    - ipa-admintools
