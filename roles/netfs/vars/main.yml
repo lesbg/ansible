@@ -1,0 +1,2 @@
+#ansible_container: '0'
+branch: "{{ lookup('file', '/etc/ansible/branch') }}"

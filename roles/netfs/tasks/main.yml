@@ -1,5 +1,5 @@
 ---
-# file: roles/common/tasks/fs.yml
+# file: roles/netfs/tasks/main.yml
 
 - include: lizardfs.yml
   when: branch == "lesbg"

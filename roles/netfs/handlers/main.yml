@@ -1,0 +1,8 @@
+---
+# file: roles/common/handlers/main.yml
+
+- name: reload systemd config
+  command: systemctl --system daemon-reload
+
+- include: lizardfs.yml
+- include: nfs.yml
