@@ -2,7 +2,7 @@
 Description=Mount Netshare via LizardFS
 After=syslog.target local-fs.target network-online.target
 Wants=bindfs-depts.service
-Before=bindfs-depts.service
+Before=bindfs-depts.service systemd-user-sessions.service
 
 [Service]
 Type=oneshot

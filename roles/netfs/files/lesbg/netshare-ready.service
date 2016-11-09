@@ -1,7 +1,7 @@
 [Unit]
 Description=Check whether netshare is ready
 After=netshare-mount.service network-online.target
-Before=bindfs-depts.service
+Before=bindfs-depts.service systemd-user-sessions.service
 
 [Service]
 Type=oneshot
