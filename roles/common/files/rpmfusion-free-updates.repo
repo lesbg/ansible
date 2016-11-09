@@ -1,0 +1,6 @@
+[rpmfusion-updates-free]
+name=RPM Fusion for Fedora $releasever - Free
+mirrorlist=http://mirrors.rpmfusion.org/mirrorlist?repo=free-fedora-updates-released-$releasever&arch=$basearch
+enabled=1
+skip_if_broken=1
+metadata_expire=7d

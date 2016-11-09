@@ -18,6 +18,8 @@
   with_items:
    - rpmfusion-free
    - rpmfusion-nonfree
+   - rpmfusion-free-updates
+   - rpmfusion-nonfree-updates
   when: rpmfusion_result|failed
   tags:
    - install
@@ -50,6 +52,8 @@
   with_items:
    - rpmfusion-free
    - rpmfusion-nonfree
+   - rpmfusion-free-updates
+   - rpmfusion-nonfree-updates
   when: rpmfusion_result|failed
   tags:
    - install
