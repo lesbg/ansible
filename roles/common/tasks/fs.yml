@@ -1,0 +1,7 @@
+---
+# file: roles/common/tasks/fs.yml
+
+- include: lizardfs.yml
+  when: branch == "lesbg"
+- include: nfs.yml
+  when: branch == "lest"

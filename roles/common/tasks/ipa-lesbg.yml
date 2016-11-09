@@ -9,7 +9,7 @@
    - ipa
 
 - name: install LizardFS IPA config file
-  copy: src=mfsmount-netshare.cfg dest=/var/tmp/ mode=0600
+  copy: src=lesbg/mfsmount-netshare.cfg dest=/var/tmp/ mode=0600
   tags:
    - setup
    - accounts

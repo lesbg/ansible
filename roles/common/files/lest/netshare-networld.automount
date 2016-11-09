@@ -1,0 +1,11 @@
+[Unit]
+Description=Networld
+ConditionPathExists=/netshare/networld
+Requires=network-online.target
+After=network-online.target
+
+[Automount]
+Where=/netshare/networld
+
+[Install]
+WantedBy=multi-user.target
