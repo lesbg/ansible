@@ -6,8 +6,6 @@
 
 - include: ntp.yml
 - include: yum.yml
-- include: lizardfs.yml
-- include: nfs.yml
 - include: ssh.yml
 - include: dconf.yml
 - include: desktop.yml

@@ -3,8 +3,6 @@
 
 - include: ../../workstations-school/tasks/main.yml
 
-- include: ../../common/tasks/fs.yml
-
 - include: ident.yml
 - include: multiseat.yml
 - include: display-manager.yml

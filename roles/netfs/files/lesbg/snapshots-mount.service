@@ -1,6 +1,6 @@
 [Unit]
 Description=Mount Netshare snapshots via LizardFS
-After=syslog.target local-fs.target
+After=syslog.target local-fs.target network-online.target
 Wants=bindfs-depts.service
 Before=bindfs-depts.service
 
