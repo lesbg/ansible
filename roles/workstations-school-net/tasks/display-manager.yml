@@ -50,9 +50,23 @@
    - install
    - display-manager
 
-- name: copy school config files for LightDM on >= F23
+- name: copy school config files for LightDM on >= F23 and < F25
   copy: src=display-manager/conf/2/ dest=/etc/lightdm/
-  when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int >= 23
+  when: ansible_distribution != "Fedora" or ( ansible_distribution_major_version|int >= 23 and ansible_distribution_major_version|int < 25 )
+  tags:
+   - install
+   - display-manager
+
+- name: copy school config files for LightDM on >= F25
+  copy: src=display-manager/conf/3/ dest=/etc/lightdm/
+  when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int >= 25
+  tags:
+   - install
+   - display-manager
+
+- name: copy school config files for Xorg on >= F25
+  copy: src=xorg/ dest=/etc/X11/
+  when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int >= 25
   tags:
    - install
    - display-manager
