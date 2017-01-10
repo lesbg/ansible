@@ -59,3 +59,40 @@
    - install
    - rpmfusion
    - repo
+
+# We use a local mirror that intercepts http requests, but not https requests, so disable https 
+- name: turn off https links in rpmfusion yum repo
+  lineinfile: dest=/etc/yum.repos.d/rpmfusion-{{item}}.repo
+              backrefs=yes
+              regexp="metalink(.*)https(.*)metalink(.*)(fedora-\$release)(.*)"
+              line="mirrorlist\1http\2mirrorlist\3\4\5"
+              state=present
+  with_items:
+   - free
+   - nonfree
+  notify:
+   - clear yum cache
+   - create empty yum cache
+  when: ansible_distribution == "Fedora"
+  tags:
+   - install
+   - yum
+   - repo
+
+- name: turn off https links in rpmfusion updates yum repo
+  lineinfile: dest=/etc/yum.repos.d/rpmfusion-{{item}}-updates.repo
+              backrefs=yes
+              regexp="metalink(.*)https(.*)metalink(.*)(updates-released-\$release)(.*)"
+              line="mirrorlist\1http\2mirrorlist\3\4\5"
+              state=present
+  with_items:
+   - free
+   - nonfree
+  notify:
+   - clear yum cache
+   - create empty yum cache
+  when: ansible_distribution == "Fedora"
+  tags:
+   - install
+   - yum
+   - repo
