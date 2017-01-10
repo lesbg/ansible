@@ -1,0 +1,14 @@
+[Unit]
+Description=Mount home directories
+After=syslog.target local-fs.target network-online.target netshare-mount.service netshare-ready.service
+Requires=netshare-mount.service
+Before=systemd-user-sessions.service
+
+[Mount]
+What=/netshare/users
+Where=/home
+Type=None
+Options=bind
+
+[Install]
+WantedBy=multi-user.target

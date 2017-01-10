@@ -8,9 +8,11 @@
    - netshare-mount.service
    - snapshots-mount.service
    - bindfs-depts.service
+   - home.mount
 
 - name: stop LizardFS units
   service: name={{item}} state=stopped
   with_items:
-   - netshare-mount.service
+   - home.mount
    - bindfs-depts.service
+   - netshare-mount.service
