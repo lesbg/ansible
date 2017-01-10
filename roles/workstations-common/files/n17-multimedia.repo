@@ -1,0 +1,16 @@
+[n17-multimedia]
+name=negativo17 - Multimedia
+baseurl=http://www/rpms/n17-multimedia/fedora-$releasever/$basearch/
+enabled=1
+priority=1
+skip_if_unavailable=1
+gpgcheck=0
+enabled_metadata=1
+
+[n17-multimedia-source]
+name=negativo17 - Nvidia - Source
+baseurl=http://negativo17.org/repos/multimedia/fedora-$releasever/SRPMS
+enabled=0
+skip_if_unavailable=1
+gpgcheck=0
+enabled_metadata=1

@@ -1,0 +1,5 @@
+[school-n17]
+name=Rebuilt Packages for school with n17-multimedia requirements - Fedora $releasever - $basearch
+baseurl=http://www/rpms/school-n17/$releasever/$basearch/
+enabled=1
+gpgcheck=0

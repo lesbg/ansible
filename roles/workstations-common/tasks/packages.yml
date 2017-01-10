@@ -2,6 +2,20 @@
 # file: roles/workstations/tasks/packages.yml
 - name: install school repository
   copy: src=school.repo dest=/etc/yum.repos.d
+  when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int < 25
+  tags:
+   - install
+   - packages
+   - repo
+
+- name: install extra repositories
+  copy: src={{item}}.repo dest=/etc/yum.repos.d
+  with_items:
+   - school
+   - school-n17
+   - n17-multimedia
+
+  when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int >= 25
   tags:
    - install
    - packages
@@ -68,6 +82,39 @@
    - install
    - packages
 
+- name: uninstall Blender to potentially replace with n17 if needed
+  yum: name=blender state=removed
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 25
+  tags:
+   - install
+   - packages
+
+- name: reinstall Blender to get CUDA enabled version from n17
+  yum: name={{item}}
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 25
+  with_items:
+   - blender
+   - blender-cuda
+  tags:
+   - install
+   - packages
+
+- name: install NVIDIA binary driver
+  yum: name={{item}}
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 25
+  with_items:
+   - nvidia-driver
+   - nvidia-driver-libs
+   - nvidia-driver-libs.i686
+   - nvidia-driver-cuda
+   - nvidia-driver-cuda-libs
+   - nvidia-driver-cuda-libs.i686
+   - akmod-nvidia
+   - nvidia-settings
+  tags:
+   - install
+   - packages
+
 - name: install yum langpack support
   yum: name="yum-langpacks"
   when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int < 22
@@ -78,7 +125,7 @@
 
 - name: install dnf langinstall support
   dnf: name="dnf-command(langinstall)"
-  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 22
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 22 and ansible_distribution_major_version|int < 25
   tags:
    - install
    - packages
@@ -86,12 +133,27 @@
 
 - name: install multiple language support
   command: "{{yum}} -y langinstall {{item}}"
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int < 25
   with_items:
    - "en_US"
    - "en_GB"
    - "ar_LB"
    - "fr_FR"
    - "hy"
+  tags:
+   - install
+   - packages
+   - languages
+
+- name: install multiple language support
+  dnf: name={{item}}
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 25
+  with_items:
+   - langpacks-en
+   - langpacks-en_GB
+   - langpacks-ar
+   - langpacks-fr
+   - hunspell-hy
   tags:
    - install
    - packages
