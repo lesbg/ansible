@@ -63,6 +63,7 @@
 
 - name: clear cache cookies
   command: find "/var/cache/{{ yum }}" -iname cachecookie -delete
+  changed_when: False
   tags:
    - install
    - packages
@@ -78,20 +79,32 @@
 - name: install GNOME Desktop for >= F21
   command: "{{yum}} -y groupinstall workstation-product-environment"
   when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 21
+  register: workstation_install_result
+  changed_when: '"Nothing to do" in workstation_install_result.stderr'
+  tags:
+   - install
+   - packages
+
+- name: check whether CUDA-enabled Blender is installed
+  command: rpm -q blender-cuda
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 25
+  register: blender_result
+  failed_when: False
+  changed_when: blender_result.rc != 0
   tags:
    - install
    - packages
 
 - name: uninstall Blender to potentially replace with n17 if needed
   yum: name=blender state=removed
-  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 25
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 25 and blender_result.rc != 0
   tags:
    - install
    - packages
 
 - name: reinstall Blender to get CUDA enabled version from n17
   yum: name={{item}}
-  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 25
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 25 and blender_result.rc != 0
   with_items:
    - blender
    - blender-cuda
@@ -111,6 +124,54 @@
    - nvidia-driver-cuda-libs.i686
    - akmod-nvidia
    - nvidia-settings
+  tags:
+   - install
+   - packages
+
+- name: check that /etc/default/grub exists
+  stat: path=/etc/default/grub
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 25
+  register: path
+  tags:
+   - install
+   - packages
+
+- name: remove nomodeset from kernel command line in /etc/default/grub
+  replace:
+   dest: "/etc/default/grub"
+   regexp: "nomodeset gfxpayload=vga=normal"
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 25 and path.stat.exists
+  tags:
+   - install
+   - packages
+
+- name: check that /boot/grub2/grub.cfg exists
+  stat: path=/boot/grub2/grub.cfg
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 25
+  register: path
+  tags:
+   - install
+   - packages
+
+- name: remove nomodeset from kernel command line in /boot/grub2/grub.cfg
+  replace:
+   dest: "/boot/grub2/grub.cfg"
+   regexp: "nomodeset gfxpayload=vga=normal"
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 25 and path.stat.exists
+  tags:
+   - install
+   - packages
+
+- name: check that /boot/efi/EFI/fedora/grub.cfg exists
+  stat: path=/boot/efi/EFI/fedora/grub.cfg
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 25
+  register: path
+
+- name: remove nomodeset from kernel command line in /boot/efi/EFI/fedora/grub.cfg
+  replace:
+   dest: "/boot/efi/EFI/fedora/grub.cfg"
+   regexp: "nomodeset gfxpayload=vga=normal"
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 25 and path.stat.exists
   tags:
    - install
    - packages
@@ -168,6 +229,7 @@
 
 - name: prepare to install Fonts
   command: "{{yum}} -y group mark remove fonts"
+  changed_when: False
   tags:
    - install
    - packages
@@ -183,6 +245,7 @@
 
 - name: cleanup after installing Fonts
   command: "{{yum}} -y group mark install fonts"
+  changed_when: False
   tags:
    - install
    - packages
