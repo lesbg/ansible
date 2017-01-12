@@ -126,6 +126,7 @@
    - netshare-mount.service
    - snapshots-mount.service
    - bindfs-depts.service
+   - home.mount
   tags:
    - install
    - nfs
