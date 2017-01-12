@@ -1,11 +1,43 @@
 ---
 # file: roles/common/tasks/grub.yml
 
-- name: set grub timeout to 1
+- name: set grub timeout to 1 in /etc/default/grub
   replace: dest=/etc/default/grub regexp="^(GRUB_TIMEOUT)=[0-9]*$" replace="\1=1"
   ignore_errors: yes
-  notify:
-   - rebuild grub config
+  tags:
+   - setup
+   - grub
+
+- name: check that /boot/grub2/grub.cfg exists
+  stat: path=/boot/grub2/grub.cfg
+  register: path
+  tags:
+   - setup
+   - grub
+
+- name: set grub timeout to 1 in /boot/grub2/grub.cfg
+  replace:
+   dest: '/boot/grub2/grub.cfg'
+   regexp: '(set timeout)=[0-9]*'
+   replace: '\1=1'
+  when: path.stat.exists
+  tags:
+   - setup
+   - grub
+
+- name: check that /boot/efi/EFI/fedora/grub.cfg exists
+  stat: path=/boot/efi/EFI/fedora/grub.cfg
+  register: path
+  tags:
+   - setup
+   - grub
+
+- name: set grub timeout to 1 in /boot/efi/EFI/fedora/grub.cfg
+  replace:
+   dest: '/boot/efi/EFI/fedora/grub.cfg'
+   regexp: '(set timeout)=[0-9]*'
+   replace: '\1=1'
+  when: path.stat.exists
   tags:
    - setup
    - grub
