@@ -166,6 +166,9 @@
   stat: path=/boot/efi/EFI/fedora/grub.cfg
   when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 25
   register: path
+  tags:
+   - install
+   - packages
 
 - name: remove nomodeset from kernel command line in /boot/efi/EFI/fedora/grub.cfg
   replace:
