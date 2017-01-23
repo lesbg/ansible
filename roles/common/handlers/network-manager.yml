@@ -1,0 +1,5 @@
+---
+# file: roles/common/handlers/network-manager.yml
+- name: reload NetworkManager
+  service: name=NetworkManager state=reloaded
+  ignore_errors: yes

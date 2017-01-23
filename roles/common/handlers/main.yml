@@ -10,3 +10,4 @@
 - include: dconf.yml
 - include: desktop.yml
 - include: accounts.yml
+- include: network-manager.yml

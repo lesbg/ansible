@@ -5,6 +5,7 @@
 - include: check-systemd.yml
 - include: yum.yml
 - include: ntp.yml
+- include: network-manager.yml
 - include: profile.yml
 - include: no-rename-ifcfg.yml
 - include: grub.yml

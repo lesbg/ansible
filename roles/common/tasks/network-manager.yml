@@ -1,0 +1,19 @@
+---
+# file: roles/common/tasks/network-manager.yml
+
+- name: make sure NetworkManager uses dnsmasq
+  copy: src=nm/dns.conf dest=/etc/NetworkManager/conf.d/dns.conf mode=0644
+  notify: reload NetworkManager
+  tags:
+   - install
+   - network-manager
+
+- name: make sure dnsmasq checks all servers at the same time
+  copy: src=nm/allservers.conf dest=/etc/NetworkManager/{{ item }}/allservers.conf mode=0644
+  with_items:
+   - dnsmasq.d
+   - dnsmasq-shared.d
+  notify: reload NetworkManager
+  tags:
+   - install
+   - network-manager 
