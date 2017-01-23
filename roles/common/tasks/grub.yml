@@ -5,6 +5,7 @@
   replace: dest=/etc/default/grub regexp="^(GRUB_TIMEOUT)=[0-9]*$" replace="\1=1"
   ignore_errors: yes
   tags:
+   - install
    - setup
    - grub
 
@@ -12,6 +13,7 @@
   stat: path=/boot/grub2/grub.cfg
   register: path
   tags:
+   - install
    - setup
    - grub
 
@@ -22,6 +24,7 @@
    replace: '\1=1'
   when: path.stat.exists
   tags:
+   - install
    - setup
    - grub
 
@@ -29,6 +32,7 @@
   stat: path=/boot/efi/EFI/fedora/grub.cfg
   register: path
   tags:
+   - install
    - setup
    - grub
 
@@ -39,5 +43,6 @@
    replace: '\1=1'
   when: path.stat.exists
   tags:
+   - install
    - setup
    - grub
