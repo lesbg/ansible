@@ -128,6 +128,41 @@
    - install
    - packages
 
+- name: get installed kernels
+  command: rpm -q kernel-core --qf="%{version}-%{release}.%{arch}\n"
+  changed_when: False
+  register: kernel
+  tags:
+   - akmods
+   - install
+   - packages
+
+#- name: install kernel modules
+#  yum: name=kernel-modules-{{item}}
+#  with_items: kernel.stdout_lines
+#  tags:
+#   - akmods
+#   - install
+#   - packages
+
+- name: run akmods
+  command: akmods --kernels {{item}}
+  with_items: kernel.stdout_lines
+  changed_when: False
+  tags:
+   - akmods
+   - install
+   - packages
+
+- name: add nvidia to initramfs
+  command: dracut -f -N --add-drivers "nvidia nvidia-drm nvidia-modeset i915 radeon" /boot/initramfs-{{item}}.img {{item}}
+  with_items: kernel.stdout_lines
+  changed_when: False
+  tags:
+   - akmods
+   - install
+   - packages
+
 - name: update all packages
   command: "{{yum}} -y update"
   register: workstation_install_result
