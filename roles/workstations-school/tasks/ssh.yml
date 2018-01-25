@@ -2,22 +2,24 @@
 # file: roles/workstations-school/tasks/ssh.yml
 
 - name: install ssh server
-  yum: name=openssh-server
+  dnf: name=openssh-server
   tags:
    - install
    - ssh
 
 - name: be sure sshd service is enabled
-  service: name=sshd enabled=yes
+  systemd: name=sshd enabled=yes
   tags:
    - install
+   - atomic
    - ssh
 
 - name: be sure sshd service is running
-  service: name=sshd state=running
+  systemd: name=sshd state=running
   ignore_errors: yes 
   tags:
    - install
+   - atomic
    - ssh
 
 - name: install public ssh host keys for school workstations
@@ -29,6 +31,7 @@
    - ssh_host_ecdsa_key.pub
   tags:
    - install
+   - atomic
    - ssh
 
 - name: install private ssh host keys for school workstations
@@ -40,12 +43,14 @@
    - ssh_host_ecdsa_key
   tags:
    - install
+   - atomic
    - ssh
 
 - name: create root user .ssh directory
   file: dest=/root/.ssh state=directory mode=0600
   tags:
    - install
+   - atomic
    - ssh
 
 - name: install public ssh root user files for school workstations
@@ -55,12 +60,14 @@
    - known_hosts
   tags:
    - install
+   - atomic
    - ssh
 
 - name: install public ssh root user authorized keys for school workstations
   lineinfile: dest=/root/.ssh/authorized_keys state=present line="{{ lookup('file', 'ssh-keys/authorized_keys') }}"
   tags:
    - install
+   - atomic
    - ssh
 
 - name: install private ssh root user key for school workstations
@@ -69,5 +76,6 @@
    - id_ecdsa
   tags:
    - install
+   - atomic
    - ssh
 

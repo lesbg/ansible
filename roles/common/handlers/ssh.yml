@@ -1,5 +1,5 @@
 ---
 # file: roles/common/handlers/ssh.yml
 - name: restart ssh server
-  service: name=sshd state=restarted
+  systemd: name=sshd state=restarted
   ignore_errors: yes

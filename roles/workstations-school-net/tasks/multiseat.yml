@@ -2,7 +2,7 @@
 # file: roles/workstations-school/tasks/multiseat.yml
 
 - name: install pyudev
-  yum: name={{item}} state=present
+  dnf: name={{item}} state=present
   with_items:
    - python-pyudev
   tags:
@@ -13,35 +13,41 @@
   copy: src=multiseat/make-multiseat-udev-rules.py dest=/usr/libexec/ mode=0755
   tags:
    - install
+   - atomic
    - multiseat
 
 - name: Install multiseat usb hub list
   copy: src=multiseat/usb-logical-hubs.txt dest=/usr/share/multiseat/
   tags:
    - install
+   - atomic
    - multiseat
 
 - name: Install multiseat startup service
   copy: src=multiseat/prepare-multiseat.service dest=/usr/lib/systemd/system/
   tags:
    - install
+   - atomic
    - multiseat
 
 - name: Install multiseat config file
   copy: src=multiseat/multiseat.conf dest=/etc/ force=no
   tags:
    - install
+   - atomic
    - multiseat
 
 - name: be sure multiseat service is enabled
-  service: name=prepare-multiseat enabled=yes
+  systemd: name=prepare-multiseat enabled=yes
   tags:
    - install
+   - atomic
    - multiseat
 
 - name: be sure multiseat service is running
-  service: name=prepare-multiseat state=running
+  systemd: name=prepare-multiseat state=running
   ignore_errors: yes 
   tags:
    - install
+   - atomic
    - multiseat

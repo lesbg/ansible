@@ -1,7 +1,7 @@
 ---
 # file: roles/common/handlers/nfs.yml
 - name: start NFS units
-  service: name={{item}} state=restarted
+  systemd: name={{item}} state=restarted
   ignore_errors: yes 
   with_items:
    - netshare-networld.automount
@@ -9,7 +9,7 @@
    - bindfs-depts.service
 
 - name: stop NFS units
-  service: name={{item}} state=stopped
+  systemd: name={{item}} state=stopped
   with_items:
    - netshare-networld.automount
    - netshare-users.automount

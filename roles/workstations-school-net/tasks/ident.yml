@@ -2,21 +2,23 @@
 # file: roles/workstations-school-net/tasks/ident.yml
 
 - name: install ident daemon
-  yum: name="oidentd"
+  dnf: name="oidentd"
   tags:
    - install
    - ident
 
 - name: be sure ident service is enabled
-  service: name=oidentd enabled=yes
+  systemd: name=oidentd enabled=yes
   tags:
    - install
+   - atomic
    - ident
 
 - name: be sure ident service is running
-  service: name=oidentd state=running
+  systemd: name=oidentd state=running
   ignore_errors: yes 
   tags:
    - install
+   - atomic
    - ident
 

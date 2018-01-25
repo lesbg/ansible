@@ -2,7 +2,7 @@
 # file: roles/common/tasks/main.yml
 
 - name: be sure ntp and ntpdate are installed
-  action: yum pkg=ntp state=installed 
+  dnf: name=ntp state=installed
   tags:
    - install
    - ntp
@@ -14,21 +14,24 @@
 #  tags: ntp
 
 - name: be sure ntpd is enabled
-  service: name=ntpd enabled=yes
+  systemd: name=ntpd.service enabled=yes
   tags:
    - install
+   - atomic
    - ntp
 
 - name: be sure ntpd is running
-  service: name=ntpd state=running
+  systemd: name=ntpd state=running
   ignore_errors: yes
   tags:
    - install
+   - atomic
    - ntp
 
 - name: be sure ntpdate is enabled
-  service: name=ntpdate enabled=yes
+  systemd: name=ntpdate.service enabled=yes
   tags:
    - install
+   - atomic
    - ntp
 

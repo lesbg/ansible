@@ -2,7 +2,7 @@
 # file: roles/common/handlers/lizardfs.yml
 
 - name: start LizardFS units
-  service: name={{item}} state=started
+  systemd: name={{item}} state=started
   ignore_errors: yes 
   with_items:
    - netshare-mount.service
@@ -11,7 +11,7 @@
    - home.mount
 
 - name: stop LizardFS units
-  service: name={{item}} state=stopped
+  systemd: name={{item}} state=stopped
   with_items:
    - home.mount
    - bindfs-depts.service

@@ -73,7 +73,7 @@
    - nfs
 
 - name: install bindfs, nfs-utils and rpcbind
-  yum: name={{item}} state=installed
+  dnf: name={{item}} state=installed
   with_items:
    - bindfs
    - rpcbind
@@ -95,7 +95,7 @@
    - nfs
 
 - name: enable NFS units
-  service: name={{item}} enabled=yes
+  systemd: name={{item}} enabled=yes
   with_items:
    - netshare-networld.automount
    - bindfs-world.service

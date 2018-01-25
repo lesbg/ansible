@@ -1,7 +1,7 @@
 ---
 # file: roles/common/handlers/accounts.yml
 - name: restart accounts service
-  service: name={{item}} state=restarted
+  systemd: name={{item}} state=restarted
   ignore_errors: yes 
   with_items:
    - accounts-daemon.service
