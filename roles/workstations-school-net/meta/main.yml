@@ -3,3 +3,5 @@
 
 dependencies:
   - { role: netfs }
+  - { role: workstations-school }
+  - { role: ipa }
