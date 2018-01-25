@@ -2,17 +2,16 @@
 # file: roles/workstations-school-standalone/tasks/display-manager.yml
 
 - name: remove LightDM
-  yum: name={{item}} state=absent
+  dnf: name={{item}} state=absent
   with_items:
    - lightdm
    - lightdm-qt
-   - lightdm-kde
   tags:
    - install
    - display-manager
 
 - name: remove lightdm-gtk
-  yum: name=lightdm-gtk state=absent
+  dnf: name=lightdm-gtk state=absent
   tags:
    - install
    - display-manager
@@ -21,12 +20,14 @@
   file: path=/etc/systemd/system/display-manager.service src=/usr/lib/systemd/system/gdm.service state=link
   tags:
    - install
+   - atomic
    - display-manager
 
 - name: set graphic boot as default boot target
   file: path=/etc/systemd/system/default.target src=/lib/systemd/system/graphical.target state=link
   tags:
    - install
+   - atomic
    - display-manager
 
 - name: remove LightDM config
@@ -36,16 +37,18 @@
    - /etc/lightdm
   tags:
    - install
+   - atomic
    - display-manager
 
 - name: set default session to GNOME
   file: src=gnome.desktop path=/usr/share/xsessions/default.desktop state=link
   tags:
    - install
+   - atomic
    - display-manager
 
 - name: remove xscreensaver
-  yum: name={{item}} state=absent
+  dnf: name={{item}} state=absent
   with_items:
    - xscreensaver-gl-extras
    - xscreensaver-gl-base
@@ -57,6 +60,7 @@
   copy: src=display-manager/custom.conf dest=/etc/gdm
   tags:
    - install
+   - atomic
    - display-manager
 
 

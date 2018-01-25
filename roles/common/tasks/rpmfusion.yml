@@ -27,7 +27,7 @@
    - repo
 
 - name: install rpmfusion-free-release
-  yum: name=rpmfusion-free-release
+  dnf: name=rpmfusion-free-release
        disable_gpg_check=yes
        state=present
   when: rpmfusion_result|failed
@@ -37,7 +37,7 @@
    - repo
 
 - name: install rpmfusion-nonfree-release
-  yum: name=rpmfusion-nonfree-release
+  dnf: name=rpmfusion-nonfree-release
        disable_gpg_check=yes
        state=present
   when: rpmfusion_result|failed
@@ -76,6 +76,7 @@
   when: ansible_distribution == "Fedora"
   tags:
    - install
+   - atomic
    - yum
    - repo
 
@@ -94,5 +95,6 @@
   when: ansible_distribution == "Fedora"
   tags:
    - install
+   - atomic
    - yum
    - repo

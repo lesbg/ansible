@@ -2,8 +2,9 @@
 # file: roles/workstations-school-net/tasks/abrt.yml
 
 - name: Remove ABRT gui
-  yum: name={{item}} state=absent
+  dnf: name={{item}} state=absent
   with_items:
+   - abrt-desktop
    - abrt-gui
    - gnome-abrt
   tags:

@@ -2,22 +2,23 @@
 # file: roles/workstations-school-net/tasks/packagekit.yml
 
 - name: Disable packagekit
-  service: name={{item}} enabled=no
+  systemd: name={{item}} enabled=no
   with_items:
    - packagekit
    - packagekit-offline-update
   tags:
    - install
+   - atomic
    - packagekit
 
 - name: Remove gnome-software
-  yum: name=gnome-software state=absent
+  dnf: name=gnome-software state=absent
   tags:
    - install
    - packagekit
 
 - name: Add packages that get automatically removed when gnome-software is removed
-  yum: name={{item}} state=present
+  dnf: name={{item}} state=present
   with_items:
    - shim
    - PackageKit
@@ -26,7 +27,7 @@
    - packagekit
 
 - name: Add extra F23+ packages
-  yum: name={{item}} state=present
+  dnf: name={{item}} state=present
   when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int >= 23
   with_items:
    - fwupd

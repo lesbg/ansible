@@ -1,7 +1,7 @@
 ---
 # file: roles/workstations-school/tasks/virt.yml
 - name: Install VirtualBox with kmod
-  yum: name={{item}} state=present
+  dnf: name={{item}} state=present
   with_items:
    - VirtualBox
    - kmod-VirtualBox
@@ -12,7 +12,7 @@
    - virt
 
 - name: Install VirtualBox with akmods
-  yum: name={{item}} state=present
+  dnf: name={{item}} state=present
   with_items:
    - VirtualBox
    - akmod-VirtualBox
@@ -29,7 +29,7 @@
    - virt
 
 - name: Install VirtualBox akmods
-  yum: name={{item}} state=present
+  dnf: name={{item}} state=present
   with_items:
    - akmod-VirtualBox
   when: kmod_install == 0
@@ -41,18 +41,21 @@
   file: dest=/usr/share/os_images state=directory mode=0755
   tags:
    - install
+   - atomic
    - virt
 
 - name: Install VirtualBox files
   copy: src=virtualbox/.VirtualBox dest=/usr/share/os_images/
   tags:
    - install
+   - atomic
    - virt
 
 - name: Create snapshot symlink
   file: src=/var/tmp dest=/usr/share/os_images/.VirtualBox/Machines/Snapshots state=link
   tags:
    - install
+   - atomic
    - virt
 
 - name: Install VirtualBox hard drive
@@ -71,10 +74,12 @@
   copy: src=virtualbox/startvirt dest=/usr/bin mode=0755
   tags:
    - install
+   - atomic
    - virt
 
 - name: Install virt desktop file
   copy: src=virtualbox/startvirt.desktop dest=/usr/share/applications mode=0644
   tags:
    - install
+   - atomic
    - virt

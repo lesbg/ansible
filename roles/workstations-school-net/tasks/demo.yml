@@ -2,7 +2,7 @@
 # file: roles/workstations-school-net/tasks/demo.yml
 
 - name: install GTK VNC python library
-  yum: name=gtk-vnc-python
+  dnf: name=gtk-vnc-python
   tags:
    - install
    - demo
@@ -11,12 +11,14 @@
   copy: src=demo-client/share/demo-client dest=/usr/share/
   tags:
    - install
+   - atomic
    - demo
 
 - name: install demo-client binary
   copy: src=demo-client/demo-client dest=/usr/bin mode=0755
   tags:
    - install
+   - atomic
    - demo
 
 - name: install demo-client desktop file
@@ -26,11 +28,12 @@
    - setup desktop files
   tags:
    - install
+   - atomic
    - demo
 
 # For teacher station only
 - name: install x11vnc
-  yum: name=x11vnc state=present
+  dnf: name=x11vnc state=present
   when: ansible_hostname == "scc251" or ansible_hostname == "jcc-teacher"
   tags:
    - install
@@ -46,4 +49,5 @@
    - setup desktop files
   tags:
    - install
+   - atomic
    - demo

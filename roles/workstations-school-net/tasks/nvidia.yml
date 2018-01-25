@@ -2,11 +2,12 @@
 # file: roles/workstations-school/tasks/nvidia.yml
 
 - name: install NVIDIA drivers
-  yum: name={{item}} state=present
+  dnf: name={{item}} state=present
   with_items:
    - nvidia-driver
    - nvidia-driver-cuda
    - cuda
   tags:
    - install
+   - atomic
    - nvidia

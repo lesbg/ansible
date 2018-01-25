@@ -2,21 +2,23 @@
 # file: roles/common/tasks/disable-firewalld.yml
 
 - name: be sure firewalld is installed
-  action: yum pkg=firewalld state=installed 
+  dnf: name=firewalld state=installed
   tags:
    - install
    - firewalld
  
 - name: be sure firewalld is disabled
-  service: name=firewalld enabled=no
+  systemd: name=firewalld enabled=no
   tags:
    - install
+   - atomic
    - firewalld
 
 - name: be sure firewalld is stopped
-  service: name=firewalld state=stopped
+  systemd: name=firewalld state=stopped
   ignore_errors: yes
   tags:
    - install
+   - atomic
    - firewalld
 
