@@ -1,0 +1,11 @@
+---
+# file: roles/common/tasks/paper.yml
+
+- name: copy paper settings
+  copy: src={{item}} dest=/etc/ mode=0644
+  with_items:
+   - papersize
+  tags:
+   - install
+   - atomic
+   - paper

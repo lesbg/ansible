@@ -7,6 +7,7 @@
 - include: ntp.yml
 - include: network-manager.yml
 - include: profile.yml
+- include: paper.yml
 - include: no-rename-ifcfg.yml
 - include: grub.yml
 - include: quirks.yml
