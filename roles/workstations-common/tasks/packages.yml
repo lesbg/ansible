@@ -2,7 +2,7 @@
 # file: roles/workstations/tasks/packages.yml
 - name: install school repository
   copy: src=school.repo dest=/etc/yum.repos.d
-  when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int < 25
+  when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int < 25 or ansible_distribution_major_version|int >= 27
   tags:
    - install
    - packages
@@ -12,17 +12,15 @@
   copy: src={{item}}.repo dest=/etc/yum.repos.d
   with_items:
    - school
-   - school-n17
    - n17-multimedia
-
-  when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int >= 25
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 25 and ansible_distribution_major_version|int < 27
   tags:
    - install
    - packages
    - repo
 
 - name: install python-dnf
-  yum: name="python-dnf"
+  dnf: name="python-dnf"
   when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 22
   tags:
    - install
@@ -36,6 +34,7 @@
   when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int < 22
   tags:
    - install
+   - atomic
    - packages
    - repo
    - languages
@@ -46,6 +45,7 @@
   when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 22
   tags:
    - install
+   - atomic
    - packages
    - repo
    - languages
@@ -66,11 +66,12 @@
   changed_when: False
   tags:
    - install
+   - atomic
    - packages
    - repo
 
 - name: install GNOME Desktop for < F21
-  yum: name="@^gnome-desktop-environment"
+  dnf: name="@^gnome-desktop-environment"
   when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int < 21
   tags:
    - install
@@ -87,7 +88,7 @@
 
 - name: check whether CUDA-enabled Blender is installed
   command: rpm -q blender-cuda
-  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 25
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 25 and ansible_distribution_major_version|int < 27
   register: blender_result
   failed_when: False
   changed_when: blender_result.rc != 0
@@ -96,15 +97,15 @@
    - packages
 
 - name: uninstall Blender to potentially replace with n17 if needed
-  yum: name=blender state=removed
-  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 25 and blender_result.rc != 0
+  dnf: name=blender state=removed
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 25 and ansible_distribution_major_version|int < 27 and blender_result.rc != 0
   tags:
    - install
    - packages
 
 - name: reinstall Blender to get CUDA enabled version from n17
-  yum: name={{item}}
-  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 25 and blender_result.rc != 0
+  dnf: name={{item}}
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 25 and ansible_distribution_major_version|int < 27 and blender_result.rc != 0
   with_items:
    - blender
    - blender-cuda
@@ -112,9 +113,9 @@
    - install
    - packages
 
-- name: install NVIDIA binary driver
-  yum: name={{item}}
-  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 25
+- name: install NVIDIA binary driver from n17
+  dnf: name={{item}}
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 25 and ansible_distribution_major_version|int < 27
   with_items:
    - nvidia-driver
    - nvidia-driver-libs
@@ -128,17 +129,41 @@
    - install
    - packages
 
+- name: install NVIDIA binary driver from RPM Fusion
+  dnf: name={{item}}
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 27
+  with_items:
+   - xorg-x11-drv-nvidia
+   - xorg-x11-drv-nvidia-libs
+   - xorg-x11-drv-nvidia-libs.i686
+   - xorg-x11-drv-nvidia-cuda-libs
+   - xorg-x11-drv-nvidia-cuda-libs.i686
+   - akmod-nvidia
+   - nvidia-settings
+  tags:
+   - install
+   - packages
+
+- name: clear out rpm locks
+  command: rpm -q kernel-core
+  changed_when: False
+  tags:
+   - install
+   - atomic
+   - akmods
+   - packages
 - name: get installed kernels
   command: rpm -q kernel-core --qf="%{version}-%{release}.%{arch}\n"
   changed_when: False
   register: kernel
   tags:
-   - akmods
    - install
+   - atomic
+   - akmods
    - packages
 
 #- name: install kernel modules
-#  yum: name=kernel-modules-{{item}}
+#  dnf: name=kernel-modules-{{item}}
 #  with_items: kernel.stdout_lines
 #  tags:
 #   - akmods
@@ -147,20 +172,22 @@
 
 - name: run akmods
   command: akmods --kernels {{item}}
-  with_items: kernel.stdout_lines
+  with_items: "{{ kernel.stdout_lines }}"
   changed_when: False
   tags:
-   - akmods
    - install
+   - atomic
+   - akmods
    - packages
 
 - name: add nvidia to initramfs
   command: dracut -f -N --add-drivers "nvidia nvidia-drm nvidia-modeset i915 radeon" /boot/initramfs-{{item}}.img {{item}}
-  with_items: kernel.stdout_lines
+  with_items: "{{ kernel.stdout_lines }}"
   changed_when: False
   tags:
-   - akmods
    - install
+   - atomic
+   - akmods
    - packages
 
 - name: update all packages
@@ -178,6 +205,7 @@
   register: path
   tags:
    - install
+   - atomic
    - packages
 
 - name: remove nomodeset from kernel command line in /etc/default/grub
@@ -187,6 +215,7 @@
   when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 25 and path.stat.exists
   tags:
    - install
+   - atomic
    - packages
 
 - name: check that /boot/grub2/grub.cfg exists
@@ -195,6 +224,7 @@
   register: path
   tags:
    - install
+   - atomic
    - packages
 
 - name: remove nomodeset from kernel command line in /boot/grub2/grub.cfg
@@ -204,6 +234,7 @@
   when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 25 and path.stat.exists
   tags:
    - install
+   - atomic
    - packages
 
 - name: check that /boot/efi/EFI/fedora/grub.cfg exists
@@ -212,6 +243,7 @@
   register: path
   tags:
    - install
+   - atomic
    - packages
 
 - name: remove nomodeset from kernel command line in /boot/efi/EFI/fedora/grub.cfg
@@ -221,10 +253,11 @@
   when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 25 and path.stat.exists
   tags:
    - install
+   - atomic
    - packages
 
 - name: install yum langpack support
-  yum: name="yum-langpacks"
+  dnf: name="yum-langpacks"
   when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int < 22
   tags:
    - install
@@ -268,7 +301,7 @@
    - languages
 
 - name: install LibreOffice
-  yum: name="@libreoffice"
+  dnf: name="@libreoffice"
   tags:
    - install
    - packages
@@ -319,9 +352,9 @@
    - bzflag
 
 - name: install EFI bootloader utils
-  yum: name={{item}}
+  dnf: name={{item}}
   with_items:
-   - grub2-efi
+   - grub2-efi-x64
    - grub2
    - efibootmgr
    - efivar
