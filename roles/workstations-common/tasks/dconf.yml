@@ -9,4 +9,5 @@
    - db
   tags:
    - install
+   - atomic
    - dconf

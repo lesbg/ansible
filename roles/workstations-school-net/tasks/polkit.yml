@@ -5,4 +5,5 @@
   copy: src=30-lesbg-desktop.rules dest=/etc/polkit-1/rules.d/
   tags:
    - install
+   - atomic
    - polkit

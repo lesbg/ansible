@@ -1,0 +1,6 @@
+---
+# file: roles/workstations-school-standalone/meta/main.yml
+
+dependencies:
+  - { role: workstations-school }
+  - { role: ipa }

@@ -6,6 +6,7 @@
   notify: reload NetworkManager
   tags:
    - install
+   - atomic
    - network-manager
 
 - name: make sure dnsmasq checks all servers at the same time
@@ -16,4 +17,5 @@
   notify: reload NetworkManager
   tags:
    - install
+   - atomic
    - network-manager 

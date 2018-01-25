@@ -6,7 +6,9 @@
   ignore_errors: yes
   tags:
    - install
+   - atomic
    - setup
+   - atomic-setup
    - grub
 
 - name: check that /boot/grub2/grub.cfg exists
@@ -14,7 +16,9 @@
   register: path
   tags:
    - install
+   - atomic
    - setup
+   - atomic-setup
    - grub
 
 - name: set grub timeout to 1 in /boot/grub2/grub.cfg
@@ -25,7 +29,9 @@
   when: path.stat.exists
   tags:
    - install
+   - atomic
    - setup
+   - atomic-setup
    - grub
 
 - name: check that /boot/efi/EFI/fedora/grub.cfg exists
@@ -33,7 +39,9 @@
   register: path
   tags:
    - install
+   - atomic
    - setup
+   - atomic-setup
    - grub
 
 - name: set grub timeout to 1 in /boot/efi/EFI/fedora/grub.cfg
@@ -44,5 +52,7 @@
   when: path.stat.exists
   tags:
    - install
+   - atomic
    - setup
+   - atomic-setup
    - grub

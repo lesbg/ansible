@@ -5,6 +5,7 @@
   file: name=/etc/yum.repos.d/google-chrome.repo state=absent
   tags:
    - install
+   - atomic
    - google
    - chrome
 
@@ -12,6 +13,7 @@
   copy: src=google-chrome-default dest=/etc/default/google-chrome mode=0644
   tags:
    - install
+   - atomic
    - google
    - chrome
 
@@ -19,6 +21,7 @@
   file: name=/etc/yum.repos.d/google-earth.repo state=absent
   tags:
    - install
+   - atomic
    - google
    - google-earth
 
@@ -26,5 +29,6 @@
   copy: src=google-earth-default dest=/etc/default/google-earth mode=0644
   tags:
    - install
+   - atomic
    - google
    - google-earth

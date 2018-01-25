@@ -5,4 +5,5 @@
   copy: src=20-lesbg-mandatory.rules dest=/etc/polkit-1/rules.d/
   tags:
    - install
+   - atomic
    - polkit

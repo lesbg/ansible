@@ -10,4 +10,5 @@
    - 80-net-setup-link.rules
   tags:
    - install
+   - atomic
    - no-rename-ifcfg

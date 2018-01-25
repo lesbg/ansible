@@ -6,6 +6,7 @@
   when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int < 23
   tags:
    - install
+   - atomic
    - logos
 
 - name: copy school logos across for >= F23
@@ -13,4 +14,5 @@
   when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int >= 23
   tags:
    - install
+   - atomic
    - logos

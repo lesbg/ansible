@@ -5,4 +5,5 @@
   file: name=30-lesbg-desktop.rules state=absent
   tags:
    - install
+   - atomic
    - polkit

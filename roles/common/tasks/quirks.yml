@@ -6,6 +6,7 @@
   when: (ansible_product_name == "X551MA" and ansible_system_vendor == "ASUSTeK COMPUTER INC.")
   tags:
    - install
+   - atomic
    - quirks
 
 - name: set intel backlight grub option
@@ -15,6 +16,7 @@
    - rebuild grub config
   tags:
    - install
+   - atomic
    - quirks
 
 - name: disable rc6
@@ -23,4 +25,5 @@
         (ansible_distribution == "Fedora" and ansible_distribution_major_version|int <= 21)
   tags:
    - install
+   - atomic
    - quirks

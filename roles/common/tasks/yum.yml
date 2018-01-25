@@ -14,6 +14,7 @@
   when: ansible_distribution == "Fedora"
   tags:
    - install
+   - atomic
    - yum
    - repo
 
@@ -29,5 +30,6 @@
   when: ansible_distribution == "Fedora"
   tags:
    - install
+   - atomic
    - yum
    - repo

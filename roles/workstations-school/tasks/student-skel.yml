@@ -5,4 +5,5 @@
   copy: src=student dest=/usr/share/
   tags:
    - install
+   - atomic
    - student-skel

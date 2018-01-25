@@ -4,4 +4,5 @@
   copy: src=logind.conf dest=/etc/systemd/
   tags:
    - install
+   - atomic
    - power-button

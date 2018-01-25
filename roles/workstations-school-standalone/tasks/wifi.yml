@@ -5,6 +5,7 @@
   copy: src=network-scripts/{{ branch }}/ifcfg/ dest=/etc/sysconfig/network-scripts mode=0644
   tags:
    - install
+   - atomic
    - network
   ignore_errors: true
 
@@ -12,5 +13,6 @@
   copy: src=network-scripts/{{ branch }}/keys/ dest=/etc/sysconfig/network-scripts mode=0600
   tags:
    - install
+   - atomic
    - network
   ignore_errors: true
