@@ -2,7 +2,7 @@
 # file: roles/workstations-school/tasks/ipa-lest.yml
 
 - name: install nfs-utils and rpcbind
-  yum: name={{item}} state=installed
+  dnf: name={{item}} state=installed
   with_items:
    - rpcbind
    - nfs-utils

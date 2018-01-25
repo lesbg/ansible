@@ -2,7 +2,7 @@
 # file: roles/workstations-school/tasks/ipa-lesbg.yml
 
 - name: install lizardfs-client
-  yum: name=lizardfs-client state=installed
+  dnf: name=lizardfs-client state=installed
   tags:
    - setup
    - accounts
@@ -12,6 +12,7 @@
   copy: src=lesbg/mfsmount-netshare.cfg dest=/var/tmp/ mode=0600
   tags:
    - setup
+   - atomic-setup
    - accounts
    - ipa
 
@@ -21,6 +22,7 @@
         mode=0755
   tags:
    - setup
+   - atomic-setup
    - accounts
    - ipa
 
@@ -28,13 +30,15 @@
   command: mfsmount -c /var/tmp/mfsmount-netshare.cfg /tmp/autojoin
   tags:
    - setup
+   - atomic-setup
    - accounts
    - ipa
 
 - name: join LESB&G FreeIPA domain
-  command: /tmp/autojoin/networld/hd_images/linux/f23/autojoin.sh
+  command: /tmp/autojoin/networld/hd_images/linux/f{{ ansible_distribution_major_version|int }}/autojoin.sh
   tags:
    - setup
+   - atomic-setup
    - accounts
    - ipa
 
@@ -42,6 +46,7 @@
   command: umount /tmp/autojoin
   tags:
    - setup
+   - atomic-setup
    - accounts
    - ipa
 
@@ -49,5 +54,6 @@
   file: name=/var/tmp/mfsmount-netshare.cfg state=absent
   tags:
    - setup
+   - atomic-setup
    - accounts
    - ipa
