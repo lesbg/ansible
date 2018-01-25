@@ -1,23 +1,27 @@
 - name: get login passwd
-  set_fact: login_passwd="{{ lookup('file', '../files/passwd/default.passwd') }}"
+  set_fact: login_passwd="{{ lookup('file', 'default.passwd') }}"
   tags:
    - install
+   - atomic
    - passwd
 
 - name: set login passwd
   user: name=root password="{{ login_passwd }}"
   tags:
    - install
+   - atomic
    - passwd
 
 - name: create directory for VNC password
   file: dest=/root/.vnc state=directory mode=0700
   tags:
    - install
+   - atomic
    - passwd
 
 - name: setup VNC password
-  copy: src=passwd/default.vnc dest=/root/.vnc/passwd mode=0600
+  copy: src=default.vnc dest=/root/.vnc/passwd mode=0600
   tags:
    - install
+   - atomic
    - passwd
