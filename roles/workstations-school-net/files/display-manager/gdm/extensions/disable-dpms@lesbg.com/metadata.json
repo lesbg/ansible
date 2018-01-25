@@ -1,0 +1,11 @@
+{
+  "description": "Keep screen on when screensaver kicks in", 
+  "extension-id": "disable-dpms", 
+  "name": "Keep screen on", 
+  "shell-version": [
+    "3.24"
+  ], 
+  "url": "http://none.com", 
+  "uuid": "disable-dpms@lesbg.com", 
+  "version": 1
+}

@@ -1,0 +1,15 @@
+[Unit]
+Description=Light Display Manager
+Documentation=man:lightdm(1)
+Conflicts=getty@tty1.service
+After=systemd-user-sessions.service getty@tty1.service dbus.service plymouth-quit.service livesys-late.service
+
+[Service]
+ExecStartPre=/etc/lightdm/pre_init_display
+ExecStart=/usr/sbin/lightdm
+Restart=always
+IgnoreSIGPIPE=no
+BusName=org.freedesktop.DisplayManager
+
+[Install]
+Alias=display-manager.service

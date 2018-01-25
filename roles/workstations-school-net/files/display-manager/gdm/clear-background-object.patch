@@ -1,0 +1,42 @@
+From ed2e6f9b70b800a14380a75efd5f317420608445 Mon Sep 17 00:00:00 2001
+From: Jonathan Dieter <jdieter@gmail.com>
+Date: Wed, 24 Jan 2018 12:00:34 +0200
+Subject: [PATCH] background.js: destroy old background object after swapping
+
+Currently BackgroundManager._swapBackgroundActor doesn't destroy the
+old background object after swapping it out.
+
+Because each new background has a new clock object, failure to destroy
+the background objects leads to a timerfd leak from the clock objects,
+which then causes the system to run out of file descriptors.
+
+To fix this, we now destroy the background object before disposing of
+the background itself.
+
+Please note that this doesn't prevent timerfds from accumulating,
+as they are only released when automatic garbage collection is run.
+Automatic garbage collection *will* kick in before we run out of file
+descriptors, though.
+
+https://bugzilla.gnome.org/show_bug.cgi?id=790531
+
+Signed-off-by: Jonathan Dieter <jdieter@gmail.com>
+---
+ js/ui/background.js | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/js/ui/background.js b/js/ui/background.js
+index 3ea7900e7..867f337fb 100644
+--- a/js/ui/background.js
++++ b/js/ui/background.js
+@@ -719,6 +719,7 @@ var BackgroundManager = new Lang.Class({
+                            time: FADE_ANIMATION_TIME,
+                            transition: 'easeOutQuad',
+                            onComplete: function() {
++                               oldBackgroundActor.background._delegate.destroy();
+                                oldBackgroundActor.background.run_dispose();
+                                oldBackgroundActor.destroy();
+                            }
+-- 
+2.14.3
+

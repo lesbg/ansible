@@ -1,0 +1,106 @@
+---
+# file: roles/workstations-school/tasks/display-maanger.yml
+
+- name: install numlockx and gresource
+  dnf: name={{item}} state=present
+  with_items:
+   - numlockx
+   - /usr/bin/gresource
+  tags:
+   - install
+   - display-manager
+
+- name: set graphic boot as default boot target
+  file: path=/etc/systemd/system/default.target src=/lib/systemd/system/graphical.target state=link
+  tags:
+   - install
+   - atomic
+   - display-manager
+
+- name: copy GDM and Gnome Shell patches
+  copy: src=display-manager/gdm/{{item}} dest=/srv
+  with_items:
+   - gnome-shell-gdm-extensions.patch
+   - clear-background-object.patch
+  tags:
+   - install
+   - atomic
+   - display-manager
+
+- name: install Gnome Shell desktop file
+  copy: src=display-manager/gdm/org.gnome.Shell.desktop dest=/usr/local/share/applications mode=0644
+  tags:
+   - install
+   - atomic
+   - display-manager
+
+- name: install Gnome Shell resource extractor
+  copy: src=display-manager/gdm/extract-gnome-shell-resources dest=/usr/bin mode=0755
+  tags:
+   - install
+   - atomic
+   - display-manager
+
+- name: copy Gnome Shell extensions
+  copy: src=display-manager/gdm/extensions dest=/usr/share/gnome-shell/
+  tags:
+   - install
+   - atomic
+   - display-manager
+
+- name: install GDM service snippet
+  copy: src=display-manager/gdm/gdm.service.d dest=/etc/systemd/system/
+  tags:
+   - install
+   - atomic
+   - display-manager
+
+- name: install GDM dconf settings
+  copy: src=display-manager/gdm/gdm-dconf.d/ dest=/etc/dconf/db/gdm.d
+  notify:
+   - update dconf database
+  tags:
+   - install
+   - atomic
+   - display-manager
+
+- name: install GDM dconf profile
+  copy: src=display-manager/gdm/gdm-dconf-profile dest=/etc/dconf/profile/gdm mode=0644
+  tags:
+   - install
+   - atomic
+   - display-manager
+
+- name: disable GNOME initial setup
+  copy: src=display-manager/gdm/custom.conf dest=/etc/gdm
+  tags:
+   - install
+   - atomic
+   - display-manager
+
+- name: copy school config files for Xorg
+  copy: src=xorg/xorg.conf.d-2/ dest=/etc/X11/xorg.conf.d
+  tags:
+   - install
+   - atomic
+   - display-manager
+
+- name: install GDM multiseat override (see https://bugzilla.redhat.com/show_bug.cgi?id=1404849)
+  copy: src=display-manager/gdm/gnome-session dest=/usr/local/bin/ mode=0755
+  tags:
+   - install
+   - atomic
+   - display-manager
+
+- name: set default session to GNOME
+  file: src=gnome.desktop path=/usr/share/xsessions/default.desktop state=link
+  tags:
+   - install
+   - atomic
+   - display-manager
+
+- name: install x11vnc
+  dnf: name=x11vnc state=present
+  tags:
+   - install
+   - display-manager

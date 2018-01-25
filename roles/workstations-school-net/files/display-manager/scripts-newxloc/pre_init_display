@@ -1,0 +1,2 @@
+#!/bin/sh
+setfacl -m u:lightdm:rw /dev/dri/card*

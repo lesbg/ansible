@@ -1,0 +1,155 @@
+---
+# file: roles/workstations-school/tasks/display-maanger.yml
+
+- name: install LightDM and numlockx
+  dnf: name={{item}} state=present
+  when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int < 26
+  with_items:
+   - lightdm
+   - numlockx
+  tags:
+   - install
+   - display-manager
+
+- name: install LightDM KDE greeter for < F26
+  dnf: name={{item}} state=present
+  with_items:
+   - lightdm-qt
+   - lightdm-kde
+  when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int < 26
+  tags:
+   - install
+   - display-manager
+
+- name: remove lightdm-gtk for < F26
+  dnf: name=lightdm-gtk state=absent
+  when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int < 26
+  tags:
+   - install
+   - display-manager
+
+
+- name: install LightDM custom service
+  copy: src=display-manager/lightdm.service dest=/etc/systemd/system/
+  when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int < 26
+  tags:
+   - install
+   - atomic
+   - display-manager
+
+- name: set LightDM as display manager
+  file: path=/etc/systemd/system/display-manager.service src=/etc/systemd/system/lightdm.service state=link
+  when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int < 26
+  tags:
+   - install
+   - atomic
+   - display-manager
+
+- name: set graphic boot as default boot target
+  file: path=/etc/systemd/system/default.target src=/lib/systemd/system/graphical.target state=link
+  tags:
+   - install
+   - atomic
+   - display-manager
+
+- name: copy school theme files for LightDM for < F23
+  copy: src=display-manager/lightdm-kde-1/lesbg dest=/usr/share/kde4/apps/lightdm-kde-greeter/themes/
+  when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int < 23
+  tags:
+   - install
+   - atomic
+   - display-manager
+
+- name: copy school theme files for LightDM for >= F23 and < F26
+  copy: src=display-manager/lightdm-kde-2/lesbg dest=/usr/share/kde4/apps/lightdm-kde-greeter/themes/
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 23 and ansible_distribution_major_version|int < 26
+  tags:
+   - install
+   - atomic
+   - display-manager
+
+- name: copy school config files for LightDM on < F23
+  copy: src=display-manager/conf/1/ dest=/etc/lightdm/
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int < 23
+  tags:
+   - install
+   - atomic
+   - display-manager
+
+- name: copy school config files for LightDM on >= F23 and < F25
+  copy: src=display-manager/conf/2/ dest=/etc/lightdm/
+  when: ansible_distribution != "Fedora" or ( ansible_distribution_major_version|int >= 23 and ansible_distribution_major_version|int < 25 )
+  tags:
+   - install
+   - atomic
+   - display-manager
+
+- name: copy school config files for LightDM on == F25
+  copy: src=display-manager/conf/3/ dest=/etc/lightdm/
+  when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int == 25
+  tags:
+   - install
+   - atomic
+   - display-manager
+
+- name: copy school config files for Xorg on == F25
+  copy: src=xorg/xorg.conf.d/ dest=/etc/X11/xorg.conf.d
+  when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int == 25
+  tags:
+   - install
+   - atomic
+   - display-manager
+
+- name: copy school config files for Xorg on >= F26
+  copy: src=xorg/xorg.conf.d-2/ dest=/etc/X11/xorg.conf.d
+  when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int >= 26
+  tags:
+   - install
+   - atomic
+   - display-manager
+
+- name: copy school scripts for LightDM for < F21
+  copy: src=display-manager/scripts/ dest=/etc/lightdm/ mode=0755
+  tags:
+   - install
+   - atomic
+   - display-manager
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int < 21
+
+- name: copy school scripts for LightDM for >= F21
+  copy: src=display-manager/scripts-newxloc/ dest=/etc/lightdm/ mode=0755
+  tags:
+   - install
+   - atomic
+   - display-manager
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 21
+
+- name: copy screensaver config
+  copy: src=display-manager/xscreensaver dest=/var/lib/lightdm/.xscreensaver
+  tags:
+   - install
+   - atomic
+   - display-manager
+
+- name: set default session to GNOME
+  file: src=gnome.desktop path=/usr/share/xsessions/default.desktop state=link
+  tags:
+   - install
+   - atomic
+   - display-manager
+
+- name: install xscreensaver
+  dnf: name={{item}} state=present
+  with_items:
+   - xscreensaver-gl-extras
+   - xscreensaver-gl-base
+   - xscreensaver-extras
+  tags:
+   - install
+   - display-manager
+
+- name: install x11vnc
+  dnf: name=x11vnc state=present
+  tags:
+   - install
+   - display-manager

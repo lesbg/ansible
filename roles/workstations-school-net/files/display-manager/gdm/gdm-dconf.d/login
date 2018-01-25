@@ -1,0 +1,12 @@
+[org/gnome/login-screen]
+disable-user-list=true
+
+[org/gnome/settings-daemon/plugins/power]
+idle-dim=false
+active=false
+
+[org/gnome/desktop/session]
+idle-delay=uint32 60
+
+[org/gnome/shell]
+enabled-extensions=['disable-dpms@lesbg.com']

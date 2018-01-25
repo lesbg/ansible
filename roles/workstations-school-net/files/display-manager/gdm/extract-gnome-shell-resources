@@ -1,0 +1,19 @@
+#!/bin/sh
+
+gs=/usr/lib64/gnome-shell/libgnome-shell.so
+
+rm -rf /usr/share/gnome-shell/js
+mkdir -p /usr/share/gnome-shell/js
+cd /usr/share/gnome-shell/js
+
+mkdir -p ui/components ui/status misc perf extensionPrefs gdm
+
+for r in `gresource list $gs`; do
+  d=${r/#\/org\/gnome\/shell/.}
+  mkdir -p `dirname "$d"`
+  gresource extract $gs "$r" > "$d"
+done
+
+cd /usr/share/gnome-shell
+patch -p1 < /srv/clear-background-object.patch
+patch -p0 < /srv/gnome-shell-gdm-extensions.patch

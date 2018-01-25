@@ -3,7 +3,15 @@ OUTSIDE_PICS=/netshare/networld/background_pics
 LOCAL_PICS=/usr/share/backgrounds/les
 
 OUTPUT=`xrandr | grep " connected " | awk '{ print $1 }'`
-xrandr --output $OUTPUT --auto
+first_ouput=""
+for output in $OUTPUT; do
+	if [ "$first_output" == "" ]; then
+		first_output="$output"
+		xrandr --output $output --auto
+	else
+		xrandr --output $output --same-as $first_output
+	fi
+done
 
 xset dpms 0 0 0
 xset -dpms
