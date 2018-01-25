@@ -1,7 +1,4 @@
 ---
-# file: roles/workstations/tasks/main.yml
-- include: ../../common/tasks/main.yml
-- include: ../../common/tasks/passwd.yml
 - include: ../../common/tasks/rpmfusion.yml
 - include: packages.yml
 - include: libreoffice-arabic.yml

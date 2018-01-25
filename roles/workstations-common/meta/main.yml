@@ -1,0 +1,6 @@
+---
+# file: roles/workstations-common/meta/main.yml
+
+dependencies:
+  - { role: common }
+  - { role: passwd }
