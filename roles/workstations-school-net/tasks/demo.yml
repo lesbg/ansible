@@ -2,13 +2,22 @@
 # file: roles/workstations-school-net/tasks/demo.yml
 
 - name: install GTK VNC python library
-  dnf: name=gtk-vnc-python
+  dnf: name=python-gtk-vnc
   tags:
    - install
    - demo
 
-- name: install demo-client share
+- name: install demo-client share for < F28
   copy: src=demo-client/share/demo-client dest=/usr/share/
+  when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int < 28
+  tags:
+   - install
+   - atomic
+   - demo
+
+- name: install demo-client share for F28+
+  copy: src=demo-client/share28/demo-client dest=/usr/share/
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 28
   tags:
    - install
    - atomic
