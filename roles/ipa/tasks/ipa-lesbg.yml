@@ -57,3 +57,11 @@
    - atomic-setup
    - accounts
    - ipa
+
+# See https://bugzilla.redhat.com/show_bug.cgi?id=1494843
+- name: remove sssd-kcm
+  dnf: name=sssd-kcm state=absent
+  tags:
+   - setup
+   - accounts
+   - ipa
