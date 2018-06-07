@@ -1,0 +1,20 @@
+#!/bin/sh
+if [ ! -d "$HOME" ] && [ "$USER" != "student" ]; then
+	mkdir -p "$HOME"
+	cp -a /etc/skel/* "$HOME"
+	cp -a /etc/skel/.[a-zA-Z0-9]* "$HOME"
+	chown -R "$USER"."$USER" "$HOME"
+	chmod 700 "$HOME"
+fi
+
+for uname in student student1 student2 student3 student4; do
+	if [ "$USER" == "$uname" ]; then
+		mkdir -p /tmp/$uname
+		if [ -d /usr/share/student ]; then
+			rsync -avHPx --delete /usr/share/student/ /tmp/$uname
+			chown $uname.$uname /tmp/$uname -R
+		fi
+		chmod 700 /tmp/$uname
+	fi
+done
+

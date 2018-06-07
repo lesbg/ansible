@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ -z "$RUNNING_UNDER_GDM" ]; then
+  exec /usr/bin/gnome-session "$@"
+else 
+  # each GDM session should run with a per-session dbus-daemon, not the per-user one
+  exec dbus-run-session -- /usr/bin/gnome-session "$@"
+fi

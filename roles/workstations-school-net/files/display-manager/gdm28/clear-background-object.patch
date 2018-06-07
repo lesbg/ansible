@@ -1,0 +1,133 @@
+diff -urb js/ui/background.js js.b/ui/background.js
+--- a/js/ui/background.js	2018-05-30 09:54:06.271055103 +0300
++++ b/js/ui/background.js	2018-05-30 09:58:25.827152812 +0300
+@@ -145,6 +145,7 @@
+         this._fileMonitors = {};
+         this._backgroundSources = {};
+         this._animations = {};
++        this._clock = null;
+     },
+ 
+     monitorFile(file) {
+@@ -197,6 +198,12 @@
+         });
+     },
+ 
++    getWallClock: function() {
++        if (!this._clock)
++            this._clock = new GnomeDesktop.WallClock();
++        return this._clock;
++    },
++
+     getBackgroundSource(layoutManager, settingsSchema) {
+         // The layoutManager is always the same one; we pass in it since
+         // Main.layoutManager may not be set yet
+@@ -232,6 +239,7 @@
+ 
+ var Background = new Lang.Class({
+     Name: 'Background',
++    Extends: Meta.Background,
+ 
+     _init(params) {
+         params = Params.parse(params, { monitorIndex: 0,
+@@ -240,8 +248,7 @@
+                                         file: null,
+                                         style: null });
+ 
+-        this.background = new Meta.Background({ meta_screen: global.screen });
+-        this.background._delegate = this;
++        this.parent({ meta_screen: global.screen });
+ 
+         this._settings = params.settings;
+         this._file = params.file;
+@@ -252,7 +259,8 @@
+         this._cancellable = new Gio.Cancellable();
+         this.isLoaded = false;
+ 
+-        this._clock = new GnomeDesktop.WallClock();
++        let cache = getBackgroundCache();
++        this._clock = cache.getWallClock();
+         this._timezoneChangedId = this._clock.connect('notify::timezone',
+             () => {
+                 if (this._animation)
+@@ -298,6 +306,7 @@
+         if (this._settingsChangedSignalId != 0)
+             this._settings.disconnect(this._settingsChangedSignalId);
+         this._settingsChangedSignalId = 0;
++        this.run_dispose();
+     },
+ 
+     updateResolution() {
+@@ -337,9 +346,9 @@
+         let shadingType = this._settings.get_enum(COLOR_SHADING_TYPE_KEY);
+ 
+         if (shadingType == GDesktopEnums.BackgroundShading.SOLID)
+-            this.background.set_color(color);
++            this.set_color(color);
+         else
+-            this.background.set_gradient(shadingType, color, secondColor);
++            this.set_gradient(shadingType, color, secondColor);
+     },
+ 
+     _watchFile(file) {
+@@ -375,13 +384,13 @@
+         let finish = () => {
+             this._setLoaded();
+             if (files.length > 1) {
+-                this.background.set_blend(files[0], files[1],
++                this.set_blend(files[0], files[1],
+                                           this._animation.transitionProgress,
+                                           this._style);
+             } else if (files.length > 0) {
+-                this.background.set_file(files[0], this._style);
++                this.set_file(files[0], this._style);
+             } else {
+-                this.background.set_file(null, this._style);
++                this.set_file(null, this._style);
+             }
+             this._queueUpdateAnimation();
+         };
+@@ -453,7 +462,7 @@
+     },
+ 
+     _loadImage(file) {
+-        this.background.set_file(file, this._style);
++        this.set_file(file, this._style);
+         this._watchFile(file);
+ 
+         let cache = Meta.BackgroundImageCache.get_default();
+@@ -593,7 +602,6 @@
+ 
+             background._changedId = background.connect('changed', () => {
+                 background.disconnect(background._changedId);
+-                background.destroy();
+                 delete this._backgrounds[monitorIndex];
+             });
+ 
+@@ -714,7 +722,7 @@
+                            time: FADE_ANIMATION_TIME,
+                            transition: 'easeOutQuad',
+                            onComplete() {
+-                               oldBackgroundActor.background.run_dispose();
++                               oldBackgroundActor.background.destroy();
+                                oldBackgroundActor.destroy();
+                            }
+                          });
+@@ -734,7 +742,7 @@
+ 
+         this._newBackgroundActor = newBackgroundActor;
+ 
+-        let background = newBackgroundActor.background._delegate;
++        let background = newBackgroundActor.background;
+ 
+         if (background.isLoaded) {
+             this._swapBackgroundActor();
+@@ -753,7 +761,7 @@
+         let background = this._backgroundSource.getBackground(this._monitorIndex);
+         let backgroundActor = new Meta.BackgroundActor({ meta_screen: global.screen,
+                                                          monitor: this._monitorIndex,
+-                                                         background: background.background,
++                                                         background: background,
+                                                          vignette: this._vignette,
+                                                          vignette_sharpness: 0.5,
+                                                          brightness: 0.5,
