@@ -1,4 +1,4 @@
-From ed2e6f9b70b800a14380a75efd5f317420608445 Mon Sep 17 00:00:00 2001
+From eb0bf02a2d8a10b734a55effa76f5fa6b021ac8f Mon Sep 17 00:00:00 2001
 From: Jonathan Dieter <jdieter@gmail.com>
 Date: Wed, 24 Jan 2018 12:00:34 +0200
 Subject: [PATCH] background.js: destroy old background object after swapping
@@ -10,33 +10,159 @@ Because each new background has a new clock object, failure to destroy
 the background objects leads to a timerfd leak from the clock objects,
 which then causes the system to run out of file descriptors.
 
-To fix this, we now destroy the background object before disposing of
-the background itself.
+To fix this, we've changed the Background class to Extend:
+Meta.Background, and we destroy the background in _swapBackgroundActor
+rather than running run_dispose() on it.  We also no longer destroy the
+background in BackgroundSource when the background has been changed
+because it will be automatically destroyed when _swapBackgroundActor is
+run as the change finishes.
 
 Please note that this doesn't prevent timerfds from accumulating,
-as they are only released when automatic garbage collection is run.
-Automatic garbage collection *will* kick in before we run out of file
-descriptors, though.
+as they are only released when automatic garbage collection is run, so we
+have taken the final step of putting the clock in the BackgroundCache, and
+reusing it from there.
 
 https://bugzilla.gnome.org/show_bug.cgi?id=790531
 
 Signed-off-by: Jonathan Dieter <jdieter@gmail.com>
 ---
- js/ui/background.js | 1 +
- 1 file changed, 1 insertion(+)
+ js/ui/background.js | 34 +++++++++++++++++++++-------------
+ 1 file changed, 21 insertions(+), 13 deletions(-)
 
 diff --git a/js/ui/background.js b/js/ui/background.js
-index 3ea7900e7..867f337fb 100644
+index 3ea7900e7..545caebca 100644
 --- a/js/ui/background.js
 +++ b/js/ui/background.js
-@@ -719,6 +719,7 @@ var BackgroundManager = new Lang.Class({
+@@ -145,6 +145,7 @@ var BackgroundCache = new Lang.Class({
+         this._fileMonitors = {};
+         this._backgroundSources = {};
+         this._animations = {};
++        this._clock = null;
+     },
+ 
+     monitorFile: function(file) {
+@@ -197,6 +198,12 @@ var BackgroundCache = new Lang.Class({
+                        }));
+     },
+ 
++    getWallClock: function() {
++        if (!this._clock)
++            this._clock = new GnomeDesktop.WallClock();
++        return this._clock;
++    },
++
+     getBackgroundSource: function(layoutManager, settingsSchema) {
+         // The layoutManager is always the same one; we pass in it since
+         // Main.layoutManager may not be set yet
+@@ -232,6 +239,7 @@ function getBackgroundCache() {
+ 
+ var Background = new Lang.Class({
+     Name: 'Background',
++    Extends: Meta.Background,
+ 
+     _init: function(params) {
+         params = Params.parse(params, { monitorIndex: 0,
+@@ -240,8 +248,7 @@ var Background = new Lang.Class({
+                                         file: null,
+                                         style: null });
+ 
+-        this.background = new Meta.Background({ meta_screen: global.screen });
+-        this.background._delegate = this;
++        this.parent({ meta_screen: global.screen });
+ 
+         this._settings = params.settings;
+         this._file = params.file;
+@@ -252,7 +259,8 @@ var Background = new Lang.Class({
+         this._cancellable = new Gio.Cancellable();
+         this.isLoaded = false;
+ 
+-        this._clock = new GnomeDesktop.WallClock();
++        let cache = getBackgroundCache();
++        this._clock = cache.getWallClock();
+         this._timezoneChangedId = this._clock.connect('notify::timezone',
+             Lang.bind(this, function() {
+                 if (this._animation)
+@@ -298,6 +306,7 @@ var Background = new Lang.Class({
+         if (this._settingsChangedSignalId != 0)
+             this._settings.disconnect(this._settingsChangedSignalId);
+         this._settingsChangedSignalId = 0;
++        this.run_dispose();
+     },
+ 
+     updateResolution: function() {
+@@ -337,9 +346,9 @@ var Background = new Lang.Class({
+         let shadingType = this._settings.get_enum(COLOR_SHADING_TYPE_KEY);
+ 
+         if (shadingType == GDesktopEnums.BackgroundShading.SOLID)
+-            this.background.set_color(color);
++            this.set_color(color);
+         else
+-            this.background.set_gradient(shadingType, color, secondColor);
++            this.set_gradient(shadingType, color, secondColor);
+     },
+ 
+     _watchFile: function(file) {
+@@ -375,13 +384,13 @@ var Background = new Lang.Class({
+         let finish = Lang.bind(this, function() {
+             this._setLoaded();
+             if (files.length > 1) {
+-                this.background.set_blend(files[0], files[1],
++                this.set_blend(files[0], files[1],
+                                           this._animation.transitionProgress,
+                                           this._style);
+             } else if (files.length > 0) {
+-                this.background.set_file(files[0], this._style);
++                this.set_file(files[0], this._style);
+             } else {
+-                this.background.set_file(null, this._style);
++                this.set_file(null, this._style);
+             }
+             this._queueUpdateAnimation();
+         });
+@@ -454,7 +463,7 @@ var Background = new Lang.Class({
+     },
+ 
+     _loadImage: function(file) {
+-        this.background.set_file(file, this._style);
++        this.set_file(file, this._style);
+         this._watchFile(file);
+ 
+         let cache = Meta.BackgroundImageCache.get_default();
+@@ -596,7 +605,6 @@ var BackgroundSource = new Lang.Class({
+ 
+             background._changedId = background.connect('changed', Lang.bind(this, function() {
+                 background.disconnect(background._changedId);
+-                background.destroy();
+                 delete this._backgrounds[monitorIndex];
+             }));
+ 
+@@ -719,7 +727,7 @@ var BackgroundManager = new Lang.Class({
                             time: FADE_ANIMATION_TIME,
                             transition: 'easeOutQuad',
                             onComplete: function() {
-+                               oldBackgroundActor.background._delegate.destroy();
-                                oldBackgroundActor.background.run_dispose();
+-                               oldBackgroundActor.background.run_dispose();
++                               oldBackgroundActor.background.destroy();
                                 oldBackgroundActor.destroy();
                             }
+                          });
+@@ -739,7 +747,7 @@ var BackgroundManager = new Lang.Class({
+ 
+         this._newBackgroundActor = newBackgroundActor;
+ 
+-        let background = newBackgroundActor.background._delegate;
++        let background = newBackgroundActor.background;
+ 
+         if (background.isLoaded) {
+             this._swapBackgroundActor();
+@@ -759,7 +767,7 @@ var BackgroundManager = new Lang.Class({
+         let background = this._backgroundSource.getBackground(this._monitorIndex);
+         let backgroundActor = new Meta.BackgroundActor({ meta_screen: global.screen,
+                                                          monitor: this._monitorIndex,
+-                                                         background: background.background,
++                                                         background: background,
+                                                          vignette: this._vignette,
+                                                          vignette_sharpness: 0.5,
+                                                          brightness: 0.5,
 -- 
 2.14.3
 
