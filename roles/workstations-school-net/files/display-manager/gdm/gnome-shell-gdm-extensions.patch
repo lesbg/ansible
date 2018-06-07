@@ -9,6 +9,15 @@ diff -urb js/ui/sessionMode.js js.b/ui/sessionMode.js
          unlockDialog: imports.gdm.loginDialog.LoginDialog,
          components: ['polkitAgent'],
          panel: {
+@@ -50,7 +50,7 @@
+         panel: {
+             left: [],
+             center: ['dateMenu'],
+-            right: ['a11yGreeter', 'keyboard', 'aggregateMenu'],
++            right: ['keyboard', 'aggregateMenu'],
+         },
+         panelStyle: 'login-screen'
+     },
 @@ -59,6 +60,7 @@
          isLocked: true,
          isGreeter: undefined,
