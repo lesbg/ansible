@@ -1,19 +1,20 @@
+[virthost]
+virthost[01:03].local.lesbg.com
+
 [sad]
-sad01.local.lesbg.com
-sad[03:04].local.lesbg.com
+sad[01:03].local.lesbg.com
 
 [src]
-srca[01:04].local.lesbg.com
-srcb[03:03].local.lesbg.com
+srca[01:05].local.lesbg.com
+srcb[02:03].local.lesbg.com
 
 [scc]
 scca[01:03].local.lesbg.com
-sccb[01:06].local.lesbg.com
+sccb[01:05].local.lesbg.com
 sccc[01:03].local.lesbg.com
 scc251.local.lesbg.com
 
 [smisc]
-slibrary.local.lesbg.com
 
 [jad]
 jad[02:03].local.lesbg.com
@@ -28,15 +29,14 @@ jcc-teacher.local.lesbg.com
 jch01.local.lesbg.com
 
 [ssr]
-ssr[01:04].local.lesbg.com
+ssr[01:01].local.lesbg.com
 
 [misc]
 isr01.local.lesbg.com
 rony-office-01.local.lesbg.com
 
 [acc]
-acc01.local.lesbg.com
-acc02.local.lesbg.com
+acc[01:03].local.lesbg.com
 
 [kg-teachers]
 lkg-rainbow-laptop.local.lesbg.com
