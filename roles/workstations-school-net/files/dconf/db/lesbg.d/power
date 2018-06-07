@@ -5,4 +5,5 @@ idle-activation-enabled=false
 idle-delay=uint32 0
 
 [org/gnome/settings-daemon/plugins/power]
-active=false
+sleep-inactive-ac-type='nothing'
+sleep-inactive-battery-type='nothing'
