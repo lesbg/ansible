@@ -1,0 +1,9 @@
+---
+# file: roles/workstations-school/tasks/browser-cache.yml
+
+- name: Setup web browsers to disable disk caching
+  copy: src=browser-cache/ dest=/etc/
+  tags:
+   - install
+   - atomic
+   - browser-cache
