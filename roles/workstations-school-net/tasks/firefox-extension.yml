@@ -1,0 +1,9 @@
+---
+# file: roles/workstations-school/tasks/firefox-extension.yml
+
+- name: Setup firefox savefromnet extension
+  copy: src=firefox-extension/ dest=/usr/share/mozilla/extensions/
+  tags:
+   - extensions
+   - firefox
+   - browser-cache
