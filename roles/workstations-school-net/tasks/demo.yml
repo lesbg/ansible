@@ -3,6 +3,14 @@
 
 - name: install GTK VNC python library
   dnf: name=python-gtk-vnc
+  when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int < 27
+  tags:
+   - install
+   - demo
+
+- name: install GTK VNC python library
+  dnf: name=gtk-vnc2
+  when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int >= 28
   tags:
    - install
    - demo

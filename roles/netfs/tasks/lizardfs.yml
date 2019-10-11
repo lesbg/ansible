@@ -82,15 +82,26 @@
    - nfs
    - lizardfs
 
+#- name: install bindfs and lizardfs-client
+#  dnf: name={{ item }} state=installed
+#  with_items:
+#   - bindfs
+#   - lizardfs-client
+#  tags:
+#   - install
+#   - nfs
+#   - lizardfs
+
 - name: install bindfs and lizardfs-client
-  dnf: name={{ item }} state=installed
-  with_items:
-   - bindfs
-   - lizardfs-client
+  dnf:
+    name:
+    - bindfs
+    - lizardfs-client
+    state: present
   tags:
-   - install
-   - nfs
-   - lizardfs
+    - install
+    - nfs
+    - lizardfs
 
 - name: install LizardFS config files
   copy: src={{ branch }}/{{ item }} dest=/etc/mfs/{{ item }} mode=0600

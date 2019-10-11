@@ -4,7 +4,7 @@
 - name: install pyudev
   dnf: name={{item}} state=present
   with_items:
-   - python-pyudev
+   - python3-pyudev
   tags:
    - install
    - multiseat
@@ -45,7 +45,7 @@
    - multiseat
 
 - name: be sure multiseat service is running
-  systemd: name=prepare-multiseat state=running
+  systemd: name=prepare-multiseat state=started
   ignore_errors: yes 
   tags:
    - install

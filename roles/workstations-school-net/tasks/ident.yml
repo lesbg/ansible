@@ -15,7 +15,7 @@
    - ident
 
 - name: be sure ident service is running
-  systemd: name=oidentd state=running
+  systemd: name=oidentd state=started
   ignore_errors: yes 
   tags:
    - install
