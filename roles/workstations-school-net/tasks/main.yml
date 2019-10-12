@@ -13,6 +13,6 @@
 - include: packagekit.yml
 - include: abrt.yml
 - include: browser-cache.yml
-- include: firefox-extension.yml
+#- include: firefox-extension.yml
 - include: selinux.yml
 - include: virt.yml

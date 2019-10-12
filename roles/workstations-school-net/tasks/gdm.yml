@@ -2,10 +2,23 @@
 # file: roles/workstations-school/tasks/display-maanger.yml
 
 - name: install numlockx and gresource
-  dnf: name={{item}} state=present
-  with_items:
-   - numlockx
-   - /usr/bin/gresource
+  when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int < 28
+  dnf:
+    name:
+     - numlockx
+     - " /usr/bin/gresource "
+    state: present
+  tags:
+   - install
+   - display-manager
+
+- name: install numlockx and gresource
+  when: ansible_distribution != "Fedora" or ansible_distribution_major_version | int >= 28
+  dnf:
+    name:
+     - numlockx
+     - glib2-devel
+    state: present
   tags:
    - install
    - display-manager

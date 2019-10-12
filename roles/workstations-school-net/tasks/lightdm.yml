@@ -2,11 +2,12 @@
 # file: roles/workstations-school/tasks/display-maanger.yml
 
 - name: install LightDM and numlockx
-  dnf: name={{item}} state=present
   when: ansible_distribution != "Fedora" or ansible_distribution_major_version|int < 26
-  with_items:
-   - lightdm
-   - numlockx
+  dnf:
+      name:
+        - lightdm
+        - numlockx
+      state: present
   tags:
    - install
    - display-manager

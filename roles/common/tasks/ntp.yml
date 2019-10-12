@@ -21,7 +21,7 @@
    - ntp
 
 - name: be sure ntpd is running
-  systemd: name=ntpd state=running
+  systemd: name=ntpd state=started
   ignore_errors: yes
   tags:
    - install

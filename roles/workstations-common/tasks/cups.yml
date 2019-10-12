@@ -20,7 +20,7 @@
    - print
 
 - name: be sure cups and cups-browsed are running
-  systemd: name={{item}} state=running
+  systemd: name={{item}} state=started
   ignore_errors: yes 
   with_items:
    - cups

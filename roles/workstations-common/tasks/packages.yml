@@ -21,7 +21,17 @@
 
 - name: install python-dnf
   dnf: name="python-dnf"
-  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 22
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 22  and ansible_distribution_major_version|int <= 29
+  tags:
+   - install
+   - packages
+   - repo
+   - languages
+   - fonts
+
+- name: install python3-dnf
+  dnf: name="python3-dnf"
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 30
   tags:
    - install
    - packages
@@ -89,13 +99,24 @@
 
 - name: install GNOME Desktop for >= F21
   command: "{{yum}} -y groupinstall workstation-product-environment"
-  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 21
+  #command: "{{yum}} -y groupinstall GNOME Desktop Environment"
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 21 and ansible_distribution_major_version|int < 30
   register: workstation_install_result
   changed_when: '"Nothing to do" in workstation_install_result.stderr'
   tags:
    - install
    - packages
 
+- name: install GNOME Desktop for >= F30
+  command: "dnf -y groupinstall workstation-product-environment"
+  #command: "{{yum}} -y groupinstall GNOME-Desktop-Environment"
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 30
+  register: workstation_install_result
+  changed_when: '"Nothing to do" in workstation_install_result.stderr'
+  tags:
+   - install
+   - packages
+                
 - name: check whether CUDA-enabled Blender is installed
   command: rpm -q blender-cuda
   when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 25 and ansible_distribution_major_version|int < 27
@@ -141,7 +162,7 @@
 
 - name: install NVIDIA binary driver from RPM Fusion
   dnf: name={{item}}
-  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 27
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 27  and ansible_distribution_major_version|int < 28
   with_items:
    - xorg-x11-drv-nvidia
    - xorg-x11-drv-nvidia-libs
@@ -154,6 +175,21 @@
    - install
    - packages
 
+- name: install NVIDIA binary driver from RPM Fusion
+  dnf: name={{item}}
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 28
+  with_items:
+   - xorg-x11-drv-nvidia-390xx
+   - xorg-x11-drv-nvidia-390xx-libs
+   - xorg-x11-drv-nvidia-390xx-libs.i686
+   - xorg-x11-drv-nvidia-390xx-cuda-libs
+   - xorg-x11-drv-nvidia-390xx-cuda-libs.i686
+   - akmod-nvidia-390xx
+   - nvidia-settings-390xx
+  tags:
+   - install
+   - packages
+
 - name: clear out rpm locks
   command: rpm -q kernel-core
   changed_when: False
@@ -162,6 +198,7 @@
    - atomic
    - akmods
    - packages
+
 - name: get installed kernels
   command: rpm -q kernel-core --qf="%{version}-%{release}.%{arch}\n"
   changed_when: False
@@ -172,13 +209,13 @@
    - akmods
    - packages
 
-#- name: install kernel modules
-#  dnf: name=kernel-modules-{{item}}
-#  with_items: kernel.stdout_lines
-#  tags:
-#   - akmods
-#   - install
-#   - packages
+- name: install kernel modules
+  dnf: name=kernel-modules
+  with_items: kernel.stdout_lines
+  tags:
+   - akmods
+   - install
+   - packages
 
 - name: run akmods
   command: akmods --kernels {{item}}
@@ -208,7 +245,7 @@
   tags:
    - install
    - packages
-
+ 
 - name: check that /etc/default/grub exists
   stat: path=/etc/default/grub
   when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 25
@@ -363,6 +400,7 @@
 
 - name: install EFI bootloader utils
   dnf: name={{item}}
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int < 28
   with_items:
    - grub2-efi-x64
    - grub2
@@ -370,6 +408,18 @@
    - efivar
    - gnu-efi
    - gnu-efi-utils
+  tags:
+   - install
+   - bootloader
+
+- name: install EFI bootloader utils for fedora 28
+  dnf: name={{item}}
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 28
+  with_items:
+   - grub2-efi-x64
+   - grub2
+   - efibootmgr
+   - efivar
   tags:
    - install
    - bootloader
@@ -385,3 +435,10 @@
    - install
    - bootloader
    - hpplugin
+
+- name: install java-1.8.0-openjdk
+  command: dnf -y install java-1.8.0-openjdk
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 28
+  tags:
+   - java
+   - packages

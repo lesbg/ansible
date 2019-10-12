@@ -1,0 +1,4 @@
+normandy.services.mozilla.com:HPKP	0	17871	1544164114558,1,0,WoiWRyIOVNa9ihaBciRSC7XHjliYS9VwUGOIud4PB18=r/mIkG3eEpVdm+u/ko/cwxzOMo1bk4TyHIlByibiA5E=YLh1dUR9y6Kja30RrAn7JKnbQG/uEtLMkBgFF2Fuihg=sRHdihwgkaib1P1gxX8HFszlD+7/gTfNvuAybgLPNis=
+normandy.services.mozilla.com:HSTS	0	17871	1575613714557,1,1,2
+normandy.cdn.mozilla.net:HPKP	0	17871	1544164115861,1,0,WoiWRyIOVNa9ihaBciRSC7XHjliYS9VwUGOIud4PB18=r/mIkG3eEpVdm+u/ko/cwxzOMo1bk4TyHIlByibiA5E=YLh1dUR9y6Kja30RrAn7JKnbQG/uEtLMkBgFF2Fuihg=sRHdihwgkaib1P1gxX8HFszlD+7/gTfNvuAybgLPNis=
+normandy.cdn.mozilla.net:HSTS	0	17871	1575613715860,1,1,2

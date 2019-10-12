@@ -15,7 +15,7 @@
    - ssh
 
 - name: be sure sshd service is running
-  systemd: name=sshd state=running
+  systemd: name=sshd state=started
   ignore_errors: yes 
   tags:
    - install

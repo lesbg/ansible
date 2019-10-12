@@ -17,4 +17,3 @@ for uname in student student1 student2 student3 student4; do
 		chmod 700 /tmp/$uname
 	fi
 done
-

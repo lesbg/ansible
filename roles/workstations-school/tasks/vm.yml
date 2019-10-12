@@ -16,7 +16,7 @@
    - vm
 
 - name: be sure iptables service is running
-  systemd: name=iptables state=running
+  systemd: name=iptables state=started
   ignore_errors: yes 
   tags:
    - install

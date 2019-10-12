@@ -2,5 +2,7 @@
 # file: ws.yml
  - hosts: ws-school-net
    remote_user: root
+   vars:
+    ansible_python_interpreter: /usr/bin/python3
    roles:
     - workstations-school-net
